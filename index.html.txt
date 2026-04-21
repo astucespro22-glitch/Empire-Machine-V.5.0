@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Empire Machine V.5.0 | Astuces des Pro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>
+:root{
+--b950:#0a1628;--b900:#0d1f3c;--b800:#1a3660;--b700:#1e4d8c;
+--b600:#1d6fcf;--b500:#2e86de;--b400:#4fa8ff;--b300:#93cbff;
+--b100:#dbeeff;--b50:#f0f8ff;
+--w:#fff;--s50:#f8fafc;--s100:#f1f6fc;--s200:#e4edf8;
+--s400:#8aaccc;--s600:#4a6885;--tm:#0d1f3c;--ts:#5a7ca0;
+--rxl:20px;--rlg:14px;--rmd:10px;--sh:0 2px 16px rgba(13,31,60,0.07);
+--purple:#7c3aed;--purple-light:#f5f3ff;--purple-border:#ddd6fe;
+--mint:#00b894;--gold:#f59e0b;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--s50);color:var(--tm);min-height:100vh;
+background-image:radial-gradient(ellipse 900px 400px at 50% -80px,rgba(46,134,222,0.08) 0%,transparent 70%),
+radial-gradient(ellipse 600px 300px at 100% 50%,rgba(79,168,255,0.05) 0%,transparent 60%)}
+.fd{font-family:'Syne',sans-serif}
+.card{background:var(--w);border:1px solid var(--s200);border-radius:var(--rxl);box-shadow:var(--sh)}
+.inp{width:100%;border:1.5px solid var(--s200);border-radius:var(--rmd);padding:11px 14px;
+font-family:'DM Sans',sans-serif;font-size:13px;color:var(--tm);background:var(--w);
+transition:border-color .2s,box-shadow .2s;outline:none;resize:vertical}
+.inp:focus{border-color:var(--b500);box-shadow:0 0 0 3px rgba(46,134,222,0.14)}
+select.inp{appearance:none;cursor:pointer;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235a7ca0' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+background-repeat:no-repeat;background-position:right 12px center;padding-right:36px}
+.lbl{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:6px}
+.lbl-b{color:var(--b500)}.lbl-p{color:var(--purple)}.lbl-g{color:var(--mint)}
+.btn{display:inline-flex;align-items:center;gap:6px;font-family:'Syne',sans-serif;font-weight:700;border:none;cursor:pointer;transition:all .2s;border-radius:var(--rmd)}
+.btn-pr{background:linear-gradient(135deg,var(--b700),var(--b500));color:#fff;font-size:13px;padding:10px 20px;box-shadow:0 4px 16px rgba(30,77,140,0.25)}
+.btn-pr:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 8px 24px rgba(30,77,140,0.35)}
+.btn-pr:disabled{background:var(--s400);box-shadow:none;cursor:not-allowed}
+.btn-launch{width:100%;padding:22px;border-radius:18px;background:linear-gradient(135deg,var(--b900) 0%,var(--b600) 100%);
+color:#fff;font-family:'Syne',sans-serif;font-size:17px;font-weight:800;text-transform:uppercase;
+letter-spacing:3px;border:none;cursor:pointer;transition:all .3s;
+box-shadow:0 8px 32px rgba(13,31,60,0.25),inset 0 1px 0 rgba(255,255,255,0.1)}
+.btn-launch:hover{transform:translateY(-2px);box-shadow:0 16px 48px rgba(13,31,60,0.3)}
+.btn-ol{background:var(--s100);color:var(--ts);border:1.5px solid var(--s200);font-size:11px;padding:8px 14px}
+.btn-ol:hover{background:var(--b50);border-color:var(--b300);color:var(--b600)}
+.btn-cp{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:var(--b50);
+color:var(--b600);border:1.5px solid var(--b100);padding:5px 12px;border-radius:6px;cursor:pointer;transition:.15s;white-space:nowrap}
+.btn-cp:hover{background:var(--b100)}.btn-cp.ok{background:#f0fdf4;color:#059669;border-color:#a7f3d0}
+.btn-dl{background:var(--b500);color:#fff;font-size:10px;padding:8px 16px}
+.btn-pdf{background:linear-gradient(135deg,#e11d48,#be123c);color:#fff;font-size:10px;padding:8px 16px;border-radius:var(--rmd);font-family:'Syne',sans-serif;font-weight:700;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:all .2s}
+.btn-pdf:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(225,29,72,0.3)}
+header{position:sticky;top:0;z-index:100;background:rgba(248,250,252,0.93);backdrop-filter:blur(12px);
+border-bottom:1px solid var(--s200);padding:12px 28px;display:flex;justify-content:space-between;align-items:center}
+.logo-pill{background:linear-gradient(135deg,var(--b800),var(--b500));color:#fff;font-family:'Syne',sans-serif;
+font-weight:800;font-size:13px;padding:8px 14px;border-radius:10px;letter-spacing:1px;position:relative;overflow:hidden}
+.logo-pill::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.13),transparent);animation:shim 2.5s infinite}
+@keyframes shim{0%,100%{transform:translateX(-100%)}50%{transform:translateX(100%)}}
+.pdots{display:flex;gap:4px;align-items:center}
+.pdot{width:8px;height:8px;border-radius:50%;transition:.3s}
+.pdot.done{background:var(--b500)}.pdot.active{background:var(--b300);box-shadow:0 0 8px var(--b400)}.pdot.pending{background:var(--s200)}
+
+/* ── Provider + Model selector ── */
+.provider-tabs{display:flex;gap:0;border:2px solid var(--s200);border-radius:12px;overflow:hidden;margin-bottom:14px}
+.provider-tab{flex:1;padding:10px;text-align:center;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;font-size:12px;transition:.2s;background:var(--s100);color:var(--ts);border:none}
+.provider-tab.active-gemini{background:linear-gradient(135deg,var(--b700),var(--b500));color:#fff}
+.provider-tab.active-claude{background:linear-gradient(135deg,#6d28d9,var(--purple));color:#fff}
+.provider-tab:first-child{border-radius:10px 0 0 10px}
+.provider-tab:last-child{border-radius:0 10px 10px 0}
+
+.model-selector{background:linear-gradient(135deg,#fdf4ff,#eff6ff);border:1.5px solid var(--purple-border);border-radius:var(--rxl);padding:22px 22px 18px;margin-bottom:18px}
+.model-selector.gemini-mode{background:linear-gradient(135deg,#f0f8ff,#eff6ff);border-color:var(--b300)}
+.model-selector.claude-mode{background:linear-gradient(135deg,#fdf4ff,#f5f3ff);border-color:var(--purple-border)}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:600px){.mgrid{grid-template-columns:1fr}}
+.mcard{background:var(--w);border:2px solid var(--s200);border-radius:var(--rlg);padding:14px 16px;cursor:pointer;transition:.2s}
+.mcard:hover{border-color:var(--b400);background:var(--b50)}
+.mcard.sel{border-color:var(--b500);background:var(--b50);box-shadow:0 0 0 3px rgba(46,134,222,0.12)}
+.mcard.sel-claude{border-color:var(--purple);background:var(--purple-light);box-shadow:0 0 0 3px rgba(124,58,237,0.12)}
+.mcard-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px}
+.mcard-name{font-family:'Syne',sans-serif;font-weight:800;font-size:12.5px;color:var(--tm);line-height:1.2}
+.mbadge{font-size:7.5px;font-weight:800;letter-spacing:1.5px;padding:3px 9px;border-radius:20px;text-transform:uppercase;white-space:nowrap;margin-left:6px;flex-shrink:0}
+.mb-rec{background:#ecfdf5;color:#059669}.mb-thi{background:#eff6ff;color:var(--b700)}
+.mb-pro{background:#f5f3ff;color:#6d28d9}.mb-leg{background:var(--s100);color:var(--s600)}
+.mb-clr{background:#fdf4ff;color:var(--purple)}.mb-fast{background:#fff7ed;color:#c2410c}
+.mcard-desc{font-size:11px;color:var(--ts);line-height:1.4}
+.mrec-hint{font-size:10px;color:var(--ts);margin-top:12px}.mrec-hint strong{color:var(--b700)}
+
+/* ── API panel ── */
+.spanel{border:1.5px solid var(--purple-border);border-radius:var(--rxl);background:linear-gradient(135deg,#fdf4ff,#eff6ff);padding:22px;margin-bottom:20px}
+.api-saved-badge{display:inline-flex;align-items:center;gap:5px;background:#ecfdf5;color:#059669;border:1px solid #a7f3d0;border-radius:20px;font-size:10px;font-weight:700;padding:4px 10px;margin-left:8px}
+
+/* ── EEAT badge strip ── */
+.eeat-strip{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.eeat-badge{font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:20px;background:var(--b50);color:var(--b700);border:1px solid var(--b100)}
+.eeat-badge.new{background:#ecfdf5;color:#065f46;border-color:#a7f3d0}
+
+.bcard{padding:0;overflow:hidden}
+.bhead{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;border-bottom:2px solid var(--s100);background:linear-gradient(to right,var(--b50),var(--w))}
+.bnum{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--b700),var(--b400));color:#fff;font-family:'Syne',sans-serif;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.chap{border-bottom:1.5px solid var(--s100)}.chap:last-child{border-bottom:none}
+.chap-hd{display:flex;justify-content:space-between;align-items:center;padding:11px 24px;background:var(--s50);border-bottom:1px solid var(--s200)}
+.chap-n{width:20px;height:20px;border-radius:5px;background:var(--b100);color:var(--b700);font-family:'Syne',sans-serif;font-weight:800;font-size:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:8px}
+.chap-t{font-family:'Syne',sans-serif;font-weight:700;font-size:11px;color:var(--b700)}
+.chap-bd{padding:18px 24px 22px}
+.prose h2{font-size:1.1rem;font-weight:800;color:var(--b900);border-left:3px solid var(--b500);padding-left:12px;margin:1.6rem 0 .5rem}
+.prose h3{font-size:.95rem;font-weight:700;color:var(--b700);margin:1.2rem 0 .4rem}
+.prose p{font-size:14px;line-height:1.85;margin-bottom:1.1rem;color:var(--tm)}
+.prose ul,.prose ol{padding-left:1.5rem;margin-bottom:1rem}
+.prose li{font-size:13.5px;margin-bottom:.45rem;line-height:1.7}
+.prose li::marker{color:var(--b500)}
+.prose strong{color:var(--b800);font-weight:600}
+.prose a{color:var(--b600);font-weight:600;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--b300);padding:0 1px;border-radius:2px;transition:.15s}
+.prose a:hover{background:var(--b50);text-decoration-color:var(--b500)}
+.prose table{width:100%;border-collapse:collapse;margin:1.3rem 0;font-size:13px}
+.prose table th{background:linear-gradient(to right,var(--b900),var(--b700));color:#fff;padding:11px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.prose table td{border:1px solid var(--s200);padding:10px 14px;vertical-align:top}
+.prose table tr:nth-child(even) td{background:var(--b50)}
+.prose table tr:hover td{background:var(--b100)}
+.prose code{background:var(--b50);color:var(--b700);padding:2px 6px;border-radius:4px;font-size:12px}
+.prose pre{background:var(--b950);color:#93cbff;padding:16px;border-radius:10px;overflow-x:auto;font-size:12px;margin:1rem 0;line-height:1.6}
+.prose blockquote{border-left:3px solid var(--b400);padding:10px 16px;background:var(--b50);border-radius:0 8px 8px 0;margin:1rem 0;font-style:italic;color:var(--ts)}
+
+/* snippet answer box */
+.snippet-box{background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:2px solid #059669;border-radius:12px;padding:16px 20px;margin:16px 0;position:relative}
+.snippet-box::before{content:'🎯 SNIPPET ANSWER — Position Zéro';font-size:9px;font-weight:800;letter-spacing:1.5px;color:#065f46;text-transform:uppercase;display:block;margin-bottom:8px}
+
+.pwrap{display:flex;flex-direction:column;gap:12px;padding:20px 24px}
+.psec{border:1.5px solid var(--s200);border-radius:var(--rlg);overflow:hidden;transition:border-color .2s}
+.psec:hover{border-color:var(--b300)}
+.psec-hd{display:flex;justify-content:space-between;align-items:center;padding:11px 15px;background:var(--s100);border-bottom:1px solid var(--s200)}
+.psec-ico{font-size:16px;margin-right:7px}
+.psec-ttl{font-family:'Syne',sans-serif;font-weight:700;font-size:12px;color:var(--tm)}
+.ptag{font-size:7.5px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;padding:2px 9px;border-radius:20px;margin-left:8px}
+.pt-seo{background:var(--b50);color:var(--b700)}.pt-struct{background:#f0fdf4;color:#065f46}
+.pt-social{background:#fdf4ff;color:#6b21a8}.pt-faq{background:#fff7ed;color:#c2410c}
+.pt-image{background:#f0f9ff;color:#0369a1}.pt-intro{background:#eff6ff;color:var(--b700)}
+.pt-schema{background:#fdf4ff;color:var(--purple)}
+.pcont{padding:13px 15px;background:var(--w);font-size:13px;line-height:1.8;color:var(--tm);white-space:pre-wrap;word-break:break-word}
+.pcont.gold{background:linear-gradient(135deg,#fffbeb,#fef3c7);border-top:2px solid var(--gold);font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:var(--b950);line-height:1.5}
+.pcont.intro-box{background:linear-gradient(135deg,var(--b50),#f8f4ff);border-top:2px solid var(--b400);font-size:13.5px;line-height:1.9}
+.pcont.schema-box{background:var(--b950);color:#93cbff;font-family:monospace;font-size:12px;line-height:1.7;border-top:2px solid var(--purple)}
+
+.snav{position:sticky;top:65px;z-index:40;background:rgba(255,255,255,0.97);backdrop-filter:blur(10px);
+border:1px solid var(--s200);border-radius:var(--rxl);padding:14px 20px;margin-bottom:20px;
+display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.spills{display:flex;gap:4px;flex-wrap:wrap}
+.sp{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border-radius:20px;transition:.2s}
+.sp.done{background:var(--b50);color:var(--b600);border:1px solid var(--b100)}
+.sp.active{background:var(--b500);color:#fff;box-shadow:0 2px 10px rgba(46,134,222,0.3)}
+.sp.pending{background:var(--s100);color:var(--s400)}
+.ph{border:2px dashed var(--s200);border-radius:var(--rxl);padding:48px;text-align:center;transition:border-color .2s}
+.ph:hover{border-color:var(--b300)}
+.movrl{position:fixed;inset:0;background:rgba(10,22,40,0.6);z-index:999;display:flex;align-items:center;justify-content:center;padding:20px}
+.mbox{background:#fff;border-radius:var(--rxl);padding:28px;max-width:400px;width:100%;box-shadow:0 24px 80px rgba(13,31,60,0.25)}
+footer{position:fixed;bottom:0;width:100%;z-index:80;background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);border-top:1px solid var(--s200);padding:10px 28px;display:flex;justify-content:space-between;align-items:center}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px}
+@media(max-width:720px){.g2,.g3,.g4{grid-template-columns:1fr}}
+main{max-width:920px;margin:0 auto;padding:28px 16px 100px}
+
+/* ── Provider indicator ── */
+.provider-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:5px}
+.provider-dot.gemini{background:var(--b400)}
+.provider-dot.claude{background:var(--purple)}
+
+/* ── Key saved indicator ── */
+.key-indicator{font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:4px}
+.key-indicator.saved{background:#ecfdf5;color:#059669}
+.key-indicator.missing{background:#fff1f2;color:#e11d48}
+</style>
+</head>
+<body>
+<header>
+<div style="display:flex;align-items:center;gap:14px">
+  <div class="logo-pill fd">EVA</div>
+  <div>
+    <div class="fd" style="font-weight:800;font-size:17px;letter-spacing:.5px">Empire Machine <span style="color:var(--b500)">V.5.0</span></div>
+    <div style="font-size:10px;color:var(--ts);font-weight:500;display:flex;align-items:center;gap:6px">
+      <span id="hdr-provider-dot" class="provider-dot gemini"></span>
+      <span id="hdr-model">Gemini 2.0 Flash</span>
+      <span id="hdr-key-status" class="key-indicator missing">⚠ Clé manquante</span>
+    </div>
+  </div>
+</div>
+<div style="display:flex;gap:8px;align-items:center">
+  <div class="pdots" id="pdots"></div>
+  <button class="btn-pdf" onclick="dlGuide()" title="Télécharger le guide PDF">📄 Guide PDF</button>
+  <button class="btn btn-ol" onclick="resetMachine()">↺ Reset</button>
+  <button class="btn btn-ol" onclick="toggleSettings()" style="color:var(--b600)">⚙ API</button>
+</div>
+</header>
+
+<main>
+<!-- API PANEL -->
+<div class="spanel" id="spanel" style="display:none">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+    <span class="lbl lbl-p" style="font-size:10px;margin-bottom:0">⚙️ Configuration API — Clés sauvegardées automatiquement</span>
+    <button class="btn btn-ol" style="font-size:10px" onclick="clearAllKeys()">🗑 Effacer les clés</button>
+  </div>
+  <div class="g2" style="gap:20px">
+    <div>
+      <span class="lbl lbl-b">🔑 Clé API Gemini <span id="gemini-key-badge"></span></span>
+      <div style="display:flex;gap:8px">
+        <input type="password" id="gemini-key-inp" class="inp" placeholder="AIzaSy..." />
+        <button class="btn btn-pr" onclick="saveGeminiKey()" style="white-space:nowrap">Sauver</button>
+      </div>
+      <p style="font-size:10px;color:var(--ts);margin-top:6px">→ <a href="https://aistudio.google.com" target="_blank" style="color:var(--b500)">aistudio.google.com</a></p>
+    </div>
+    <div>
+      <span class="lbl lbl-p">🔑 Clé API Claude (Anthropic) <span id="claude-key-badge"></span></span>
+      <div style="display:flex;gap:8px">
+        <input type="password" id="claude-key-inp" class="inp" placeholder="sk-ant-..." />
+        <button class="btn btn-pr" onclick="saveClaudeKey()" style="white-space:nowrap;background:linear-gradient(135deg,#6d28d9,var(--purple))">Sauver</button>
+      </div>
+      <p style="font-size:10px;color:var(--ts);margin-top:6px">→ <a href="https://console.anthropic.com" target="_blank" style="color:var(--purple)">console.anthropic.com</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- STEP INPUT -->
+<div id="step-inp">
+  <div style="text-align:center;margin-bottom:24px">
+    <div class="fd" style="font-size:28px;font-weight:800;color:var(--b900);line-height:1.2">Architecture <span style="color:var(--b500)">Platinium</span> <span style="font-size:16px;color:var(--purple)">V.5.0</span></div>
+    <p style="color:var(--ts);margin-top:8px;font-size:14px">E-E-A-T · Snippet Answer · Schema Article · Entités sémantiques · CPM Premium</p>
+  </div>
+
+
+
+  <!-- Provider + Model selector -->
+  <div class="model-selector gemini-mode" id="model-selector">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <span class="lbl lbl-p" style="font-size:10px;margin-bottom:0">🤖 Moteur IA — Sélectionnez fournisseur & modèle</span>
+    </div>
+    <div class="provider-tabs">
+      <button class="provider-tab active-gemini" id="tab-gemini" onclick="switchProvider('gemini')">⚡ Google Gemini</button>
+      <button class="provider-tab" id="tab-claude" onclick="switchProvider('claude')">🧠 Anthropic Claude</button>
+    </div>
+    <div class="mgrid" id="model-cards"></div>
+    <p class="mrec-hint" id="rec-hint">⚡ <strong>Recommandé :</strong> Gemini 2.0 Flash — Rapide · Idéal article standard</p>
+  </div>
+
+  <!-- Inputs form -->
+  <div class="g2" style="margin-bottom:16px">
+    <div class="card" style="padding:18px">
+      <span class="lbl lbl-b">01 · Topic & Objectif</span>
+      <input class="inp" id="inp-topic" style="font-weight:600" placeholder="Ex : Claude 3.5 vs ChatGPT — Guide Ultime 2026" />
+    </div>
+    <div class="card" style="padding:18px">
+      <span class="lbl lbl-b">02 · Mots-clés SEO</span>
+      <input class="inp" id="inp-seo" placeholder="Ex : logiciel IA entreprise, API Anthropic, Claude Pro..." />
+      <p style="font-size:10px;color:var(--ts);margin-top:6px">💡 Intégrés naturellement dans chaque chapitre</p>
+    </div>
+  </div>
+
+  <div class="card" style="padding:18px;margin-bottom:16px">
+    <span class="lbl lbl-b">03 · Source de Vérité — Transcription + Lien YouTube (optionnel)</span>
+    <textarea class="inp" id="inp-transcript" style="height:130px;font-size:12px;font-family:monospace"
+      placeholder="Collez votre transcription, notes...&#10;&#10;Lien YouTube optionnel (ex: https://youtu.be/xxxxx)"></textarea>
+  </div>
+
+  <div class="g4" style="margin-bottom:16px">
+    <div class="card" style="padding:16px">
+      <span class="lbl lbl-b">04 · Insights CTO</span>
+      <textarea class="inp" id="inp-insight" style="height:90px" placeholder="Angle différenciant, expertise unique..."></textarea>
+    </div>
+    <div class="card" style="padding:16px">
+      <span class="lbl lbl-b">05 · Context Files</span>
+      <textarea class="inp" id="inp-context" style="height:90px" placeholder="Contexte marque, audience cible..."></textarea>
+    </div>
+    <div class="card" style="padding:16px;border:1.5px solid #a7f3d0;background:linear-gradient(135deg,#f0fdf4,#fff)">
+      <span class="lbl lbl-g">06 · Auteur <span style="color:var(--mint);font-size:8px">E-E-A-T ★</span></span>
+      <input class="inp" id="inp-author" placeholder="Prénom Nom — Ex: Jean Martin" style="margin-bottom:6px"/>
+      <p style="font-size:10px;color:#059669;margin-top:4px">Schema Person + signaux de confiance Google</p>
+    </div>
+    <div class="card" style="padding:16px">
+      <span class="lbl lbl-b">07 · Liens Internes</span>
+      <textarea class="inp" id="inp-links" style="height:90px" placeholder="Titre du lien | URL&#10;Ex: automatisation IA | https://..."></textarea>
+      <p style="font-size:10px;color:var(--ts);margin-top:5px">Format : Titre | URL (un par ligne)</p>
+    </div>
+  </div>
+
+  <button class="btn-launch" onclick="startWriting()">🚀  Lancer l'Architecture Empire V.5.0</button>
+</div>
+
+<!-- STEP WRITING -->
+<div id="step-wrt" style="display:none">
+  <div class="snav">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <button class="btn btn-ol" onclick="goInputs()">← Modifier</button>
+      <div class="spills" id="spills"></div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="btn-pdf" onclick="dlGuide()">📄 Guide</button>
+      <button class="btn btn-dl btn-ol" id="btn-dl" onclick="dlArticle()" style="display:none">↓ .md</button>
+      <button class="btn btn-pr" id="btn-gen" onclick="genBlock()">⚡ Générer Bloc 1</button>
+    </div>
+  </div>
+  <div id="blocs" style="display:flex;flex-direction:column;gap:20px"></div>
+  <div class="ph" id="ph">
+    <div class="fd" style="font-size:13px;font-weight:800;color:var(--s400);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px">Prêt à générer</div>
+    <button class="btn btn-pr" onclick="genBlock()" style="margin:0 auto">⚡ Générer Bloc 1</button>
+  </div>
+</div>
+</main>
+
+<footer>
+  <span style="font-size:9px;font-weight:700;color:var(--ts)">© 2026 EMPIRE MACHINE V.5.0 — ASTUCES DES PRO</span>
+  <div style="display:flex;gap:16px;align-items:center">
+    <span style="font-size:9px;font-weight:700" id="ftr-provider">gemini</span>
+    <span style="font-size:9px;font-weight:700;color:var(--b500)" id="ftr-model">gemini-2.0-flash</span>
+    <span style="font-size:9px;font-weight:700;color:var(--ts)" id="ftr-blocs">0 / 5 BLOCS</span>
+  </div>
+</footer>
+
+<!-- Modal -->
+<div class="movrl" id="modal" style="display:none">
+  <div class="mbox">
+    <p id="modal-msg" style="font-size:14px;line-height:1.7;color:var(--tm);margin-bottom:24px;white-space:pre-line"></p>
+    <div style="display:flex;gap:10px;justify-content:flex-end">
+      <button class="btn btn-ol" onclick="closeModal()">Annuler</button>
+      <button class="btn" id="modal-ok" style="background:#dc2626;color:#fff;padding:9px 20px;font-size:12px;font-family:'Syne',sans-serif;font-weight:700">Confirmer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+var geminiKey = localStorage.getItem('eva_gemini_key') || localStorage.getItem('eva_key') || '';
+var claudeKey = localStorage.getItem('eva_claude_key') || '';
+var curProvider = localStorage.getItem('eva_provider') || 'gemini';
+var curModel = localStorage.getItem('eva_model') || 'gemini-2.0-flash';
+var blocks = [];
+var isGen = false;
+var inputs = {topic:'',seo:'',transcript:'',insight:'',context:'',author:'',links:''};
+
+try{ blocks = JSON.parse(localStorage.getItem('eva_blocks')) || []; }catch(e){ blocks=[]; }
+try{ var sv = JSON.parse(localStorage.getItem('eva_inputs')); if(sv) inputs = Object.assign(inputs,sv); }catch(e){}
+
+var SLABELS = ['Chap. 1-4','Chap. 5-8','Chap. 9-12','Chap. 13-16','Pack SEO'];
+
+// ── Model definitions ──────────────────────────────────
+var PROVIDERS = {
+  gemini: {
+    label: 'Google Gemini',
+    color: 'var(--b500)',
+    dot: 'gemini',
+    rec: 'gemini-2.0-flash',
+    hint: '⚡ <strong>Recommandé :</strong> Gemini 2.0 Flash — Rapide · Idéal article standard',
+    models: [
+      {id:'gemini-2.0-flash', name:'Gemini 2.0 Flash', badge:'mb-rec', badgeLabel:'RECOMMANDÉ', desc:'Rapide · Idéal article standard'},
+      {id:'gemini-2.0-flash-exp', name:'Gemini 2.0 Flash Exp', badge:'mb-thi', badgeLabel:'THINKING', desc:'Raisonnement approfondi · SEO complexe'},
+      {id:'gemini-1.5-pro', name:'Gemini 1.5 Pro', badge:'mb-pro', badgeLabel:'PRO', desc:'Long contexte · Transcription volumineuse'},
+      {id:'gemini-1.5-flash', name:'Gemini 1.5 Flash', badge:'mb-leg', badgeLabel:'LEGACY', desc:'Fallback stable · Compatible quota bas'},
+    ]
+  },
+  claude: {
+    label: 'Anthropic Claude',
+    color: 'var(--purple)',
+    dot: 'claude',
+    rec: 'claude-sonnet-4-5',
+    hint: '🧠 <strong>Recommandé :</strong> Claude Sonnet 4.5 — Meilleur rapport qualité/vitesse',
+    models: [
+      {id:'claude-sonnet-4-5', name:'Claude Sonnet 4.5', badge:'mb-clr', badgeLabel:'RECOMMANDÉ', desc:'Équilibre parfait · SEO avancé · Rapide'},
+      {id:'claude-opus-4-5', name:'Claude Opus 4.5', badge:'mb-pro', badgeLabel:'MAX', desc:'Qualité maximale · Niches complexes'},
+      {id:'claude-haiku-4-5-20251001', name:'Claude Haiku 4.5', badge:'mb-fast', badgeLabel:'FAST', desc:'Tests rapides · Usage économique'},
+    ]
+  }
+};
+
+// ═══════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════
+window.onload = function(){
+  document.getElementById('gemini-key-inp').value = geminiKey;
+  document.getElementById('claude-key-inp').value = claudeKey;
+  document.getElementById('inp-topic').value = inputs.topic;
+  document.getElementById('inp-seo').value = inputs.seo;
+  document.getElementById('inp-transcript').value = inputs.transcript;
+  document.getElementById('inp-insight').value = inputs.insight;
+  document.getElementById('inp-context').value = inputs.context;
+  document.getElementById('inp-author').value = inputs.author||'';
+  document.getElementById('inp-links').value = inputs.links;
+  renderProviderUI(curProvider);
+  updKeyStatus();
+  updProgress(); updFooter();
+  if(blocks.length > 0) showWrt();
+};
+
+// ═══════════════════════════════════════════════════════
+// PROVIDER & MODEL
+// ═══════════════════════════════════════════════════════
+function switchProvider(p){
+  curProvider = p;
+  localStorage.setItem('eva_provider', p);
+  var pData = PROVIDERS[p];
+  // Switch to recommended model of new provider
+  curModel = pData.rec;
+  localStorage.setItem('eva_model', curModel);
+  renderProviderUI(p);
+  updKeyStatus();
+}
+
+function renderProviderUI(p){
+  var pData = PROVIDERS[p];
+  var sel = document.getElementById('model-selector');
+  sel.className = 'model-selector ' + p + '-mode';
+
+  // Tabs
+  var tg = document.getElementById('tab-gemini');
+  var tc = document.getElementById('tab-claude');
+  tg.className = 'provider-tab' + (p==='gemini'?' active-gemini':'');
+  tc.className = 'provider-tab' + (p==='claude'?' active-claude':'');
+
+  // Model cards
+  var grid = document.getElementById('model-cards');
+  var html = '';
+  pData.models.forEach(function(m, i){
+    var isSel = m.id === curModel;
+    var selClass = isSel ? (p==='claude'?' sel-claude':' sel') : '';
+    html += '<div class="mcard'+selClass+'" id="mc-'+i+'" onclick="pickModel(\''+m.id+'\',\''+p+'\')">';
+    html += '<div class="mcard-top"><span class="mcard-name">'+m.name+'</span>';
+    html += '<span class="mbadge '+m.badge+'">'+m.badgeLabel+'</span></div>';
+    html += '<div class="mcard-desc">'+m.desc+'</div></div>';
+  });
+  grid.innerHTML = html;
+  document.getElementById('rec-hint').innerHTML = pData.hint;
+
+  // Header
+  var dot = document.getElementById('hdr-provider-dot');
+  dot.className = 'provider-dot ' + p;
+  document.getElementById('hdr-model').textContent = getModelName(curModel, p);
+  document.getElementById('ftr-provider').textContent = p.toUpperCase();
+  document.getElementById('ftr-provider').style.color = p==='claude'?'var(--purple)':'var(--b400)';
+  document.getElementById('ftr-model').textContent = curModel;
+}
+
+function pickModel(id, p){
+  curModel = id;
+  curProvider = p || curProvider;
+  localStorage.setItem('eva_model', curModel);
+  localStorage.setItem('eva_provider', curProvider);
+  renderProviderUI(curProvider);
+}
+
+function getModelName(id, p){
+  var pData = PROVIDERS[p || curProvider];
+  if(!pData) return id;
+  for(var i=0;i<pData.models.length;i++){
+    if(pData.models[i].id===id) return pData.models[i].name;
+  }
+  return id;
+}
+
+// ═══════════════════════════════════════════════════════
+// KEY MANAGEMENT
+// ═══════════════════════════════════════════════════════
+function saveGeminiKey(){
+  geminiKey = document.getElementById('gemini-key-inp').value.trim();
+  localStorage.setItem('eva_gemini_key', geminiKey);
+  localStorage.setItem('eva_key', geminiKey); // backward compat
+  updKeyStatus();
+  showKeyBadge('gemini-key-badge', true);
+}
+function saveClaudeKey(){
+  claudeKey = document.getElementById('claude-key-inp').value.trim();
+  localStorage.setItem('eva_claude_key', claudeKey);
+  updKeyStatus();
+  showKeyBadge('claude-key-badge', true);
+}
+function showKeyBadge(id, saved){
+  var el = document.getElementById(id);
+  if(!el) return;
+  el.className = 'api-saved-badge';
+  el.textContent = saved ? '✓ Sauvegardée' : '';
+  setTimeout(function(){ el.textContent=''; }, 3000);
+}
+function clearAllKeys(){
+  geminiKey=''; claudeKey='';
+  localStorage.removeItem('eva_gemini_key'); localStorage.removeItem('eva_key');
+  localStorage.removeItem('eva_claude_key');
+  document.getElementById('gemini-key-inp').value='';
+  document.getElementById('claude-key-inp').value='';
+  updKeyStatus();
+}
+function updKeyStatus(){
+  var hasKey = curProvider==='gemini' ? !!geminiKey : !!claudeKey;
+  var el = document.getElementById('hdr-key-status');
+  if(el){
+    el.className = 'key-indicator ' + (hasKey?'saved':'missing');
+    el.textContent = hasKey ? '✓ Clé active' : '⚠ Clé manquante';
+  }
+}
+function getActiveKey(){
+  return curProvider==='gemini' ? geminiKey : claudeKey;
+}
+
+function toggleSettings(){
+  var p=document.getElementById('spanel');
+  p.style.display=p.style.display==='none'?'block':'none';
+}
+
+// ═══════════════════════════════════════════════════════
+// INPUTS
+// ═══════════════════════════════════════════════════════
+function collectInps(){
+  inputs.topic = document.getElementById('inp-topic').value.trim();
+  inputs.seo = document.getElementById('inp-seo').value.trim();
+  inputs.transcript = document.getElementById('inp-transcript').value.trim();
+  inputs.insight = document.getElementById('inp-insight').value.trim();
+  inputs.context = document.getElementById('inp-context').value.trim();
+  inputs.author = document.getElementById('inp-author').value.trim();
+  inputs.links = document.getElementById('inp-links').value.trim();
+  localStorage.setItem('eva_inputs', JSON.stringify(inputs));
+}
+function parseLinks(raw){
+  if(!raw) return [];
+  return raw.split('\n').map(function(l){
+    l=l.trim(); if(!l) return null;
+    var p=l.split('|');
+    if(p.length>=2) return {text:p[0].trim(), url:p[1].trim()};
+    if(l.match(/^https?:\/\//)) return {text:l, url:l};
+    return null;
+  }).filter(Boolean);
+}
+function linksToPrompt(raw){
+  var lks=parseLinks(raw);
+  if(!lks.length) return 'Aucun lien fourni.';
+  return lks.map(function(lk){ return '- Ancre : "'+lk.text+'" --> URL : '+lk.url; }).join('\n');
+}
+
+function startWriting(){
+  collectInps();
+  if(!inputs.topic){ alert('Remplissez le Topic (01)'); return; }
+  var key = getActiveKey();
+  if(!key){ toggleSettings(); alert('Configurez votre clé API '+(curProvider==='gemini'?'Gemini':'Claude')+'.'); return; }
+  showWrt();
+}
+function showWrt(){ document.getElementById('step-inp').style.display='none'; document.getElementById('step-wrt').style.display='block'; renderBlocs(); updProgress(); updGenBtn(); }
+function goInputs(){ document.getElementById('step-inp').style.display='block'; document.getElementById('step-wrt').style.display='none'; }
+
+// ═══════════════════════════════════════════════════════
+// PROGRESS
+// ═══════════════════════════════════════════════════════
+function updProgress(){
+  var d=''; for(var i=0;i<5;i++) d+='<div class="pdot '+(i<blocks.length?'done':i===blocks.length?'active':'pending')+'"></div>';
+  document.getElementById('pdots').innerHTML=d;
+  var p=document.getElementById('spills');
+  if(p){ var h=''; for(var i=0;i<5;i++) h+='<div class="sp '+(i<blocks.length?'done':i===blocks.length?'active':'pending')+'">'+(i<blocks.length?'✓ ':'')+SLABELS[i]+'</div>'; p.innerHTML=h; }
+}
+function updFooter(){ document.getElementById('ftr-blocs').textContent=blocks.length+' / 5 BLOCS'; }
+function updGenBtn(){
+  var btn=document.getElementById('btn-gen'); var dl=document.getElementById('btn-dl'); if(!btn) return;
+  if(blocks.length>=5){ btn.textContent='✓ Complet'; btn.disabled=true; }
+  else{ btn.textContent=isGen?'Génération...':'⚡ Générer Bloc '+(blocks.length+1); btn.disabled=isGen; }
+  if(dl) dl.style.display=blocks.length>0?'inline-flex':'none';
+  var ph=document.getElementById('ph'); if(ph) ph.style.display=blocks.length>=5?'none':(blocks.length===0?'block':'none');
+}
+
+// ═══════════════════════════════════════════════════════
+// YOUTUBE
+// ═══════════════════════════════════════════════════════
+function getYT(text){
+  var m=(text||'').match(/(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_\-]{11})/);
+  return m?{full:m[0], id:m[4]}:null;
+}
+
+// ═══════════════════════════════════════════════════════
+// SYSTEM PROMPT V.5.0 — E-E-A-T + Snippet + Brand Safety
+// ═══════════════════════════════════════════════════════
+var SYS_LINES = [
+  "Tu es l'Architecte Editorial & CTO d'Astuces des Pro.",
+  "CHAQUE REQUETE EST UN NOUVEAU PROJET ISOLE. IGNORER TOUTE CONVERSATION PRECEDENTE.",
+  "OBJECTIF : Produire un pilier de contenu de +2500 mots — Architecture ICED V.5.0.",
+  "STYLE : Professionnel, vouvoiement. Paragraphes aeres (2-3 lignes max).",
+  "",
+  "=== REGLES IMPERATIVES ===",
+  "1. MOTS INTERDITS : High-CPC, CPC, monetisation directe, gagner de l argent, methode miracle, investissement garanti.",
+  "2. LEXIQUE PLATINIUM : strategie (jamais methode), optimiser ses flux de revenus, audit, infrastructure, scalabilite, automatisation semantique, analyse predictive, gouvernance, ecosysteme numerique.",
+  "3. Mots-cles SEO : integrer NATURELLEMENT dans le texte. Jamais en liste separee.",
+  "4. MAILLAGE INTERNE : Inserer les liens comme hyperliens Markdown [groupe de mots naturels](URL). JAMAIS l URL brute. JAMAIS en liste.",
+  "5. Chaque chapitre = UNE SEULE idee nouvelle. ZERO repetition.",
+  "6. 600 mots min par bloc. 300-400 mots par chapitre.",
+  "7. STRUCTURE PAR CHAPITRE : 3 paragraphes distincts. P1=idee principale. P2=exemples+donnees. P3=approfondissement expert.",
+  "8. Chapitre 7 : UNIQUEMENT tableau comparatif (intro 2-3 phrases + tableau 5col/5lignes + synthese 2-3 phrases).",
+  "",
+  "=== E-E-A-T OBLIGATOIRE (nouveau V5.0) ===",
+  "E - Experience : Citer des experiences concretes, tests reels, durees mesurees ('En testant X pendant 30 jours...'). Ne jamais generaliser sans exemple.",
+  "E - Expertise : Vocabulaire d expert justifie. Donnees chiffrees precisees. Termes techniques contextualises.",
+  "A - Authority : Mentionner des sources primaires (etudes, rapports officiels, publications sectorielles). Citations factuelles uniquement.",
+  "T - Trust : Affirmations verifiables uniquement. Ton factuel, sans exageration. Contenu sans controverse ni sujet sensible.",
+  "",
+  "=== SNIPPET ANSWER — POSITION ZERO (nouveau V5.0) ===",
+  "Au debut du Chapitre 1 UNIQUEMENT : rediger UN paragraphe de 40-60 mots en gras (**...**) qui repond directement a la question principale de l article.",
+  "Ce paragraphe doit etre autonome, factuel, et lisible sans contexte. C est la candidature a la Position Zero Google.",
+  "Apres ce snippet, continuer avec les 3 paragraphes normaux du chapitre.",
+  "",
+  "=== TABLE DES MATIERES (nouveau V5.0) ===",
+  "Au debut du Bloc 1 UNIQUEMENT, avant le Chapitre 1 : generer une table des matieres avec ancres HTML.",
+  "Format : ## Table des matieres suivi d une liste numerotee des 16 chapitres avec ancres (#chapitre-1, #chapitre-2...).",
+  "",
+  "=== ENTITES SEMANTIQUES (nouveau V5.0) ===",
+  "Pour chaque bloc : identifier et couvrir : (1) Entite principale, (2) Entites connexes obligatoires, (3) Entites de contexte (outils/marques), (4) Entites de confiance (sources officielles).",
+  "La couverture semantique complete = signal de pertinence fort pour Google Knowledge Graph.",
+  "",
+  "=== BRAND SAFETY — CPM PREMIUM (nouveau V5.0) ===",
+  "Contenu sans controverse. Sources legitimes uniquement. Ton sobre et professionnel.",
+  "Section data-driven obligatoire dans le Chapitre 12 (KPIs, tableaux de donnees, metriques reelles).",
+  "Auteur identifiable integre dans les signaux de confiance."
+];
+var SYS = SYS_LINES.join('\n');
+
+// ═══════════════════════════════════════════════════════
+// ARCHITECTURE 16 CHAPITRES
+// ═══════════════════════════════════════════════════════
+var ARCH = {
+  1:{titre:'BLOC 1 — Chapitres 1 à 4 : Fondations & Accroche',chapitres:[
+    {n:1,role:'TABLE DES MATIERES + SNIPPET ANSWER + ACCROCHE',consigne:"ETAPE 1 : Generer la table des matieres complete (## Table des matieres, liste 16 chapitres, ancres HTML). ETAPE 2 : Snippet Answer (40-60 mots en **gras**, reponse directe Position Zero). ETAPE 3 : Accroche editoriale — P1 probleme central avec force, P2 exemples concrets et donnees reelles prouvant l enjeu, P3 promesse claire de l article. 3 paragraphes 300-400 mots total. Mots-cles integres. E-E-A-T."},
+    {n:2,role:'PREMIER POINT DE VALEUR CONCRET',consigne:"P1 : Presenter le premier point de valeur, l idee centrale sans detour. P2 : Cas concret, chiffres, application reelle — experience de 30 jours minimum. P3 : Nuance, subtilite que la plupart ignorent, lien avec la suite. 300-400 mots. E-E-A-T."},
+    {n:3,role:'ZONE VIDEO & APPROFONDISSEMENT',consigne:'VOIR INSTRUCTION SPECIFIQUE CI-DESSOUS.'},
+    {n:4,role:'CONTEXTE & ENJEUX — ENTITES SEMANTIQUES',consigne:"P1 : Pourquoi ce sujet est critique maintenant — contexte, timing, donnees de marche avec sources officielles. P2 : Risques concrets pour le lecteur qui n agit pas — exemples chiffres, consequences mesurees. P3 : Transformer l urgence en opportunite — ce que ceux qui agissent gagnent. Couvrir les entites semantiques principales et connexes. Lexique Platinium. 300-400 mots."}
+  ]},
+  2:{titre:'BLOC 2 — Chapitres 5 à 8 : Développement & Tableau',chapitres:[
+    {n:5,role:'FONDAMENTAUX A MAITRISER',consigne:"P1 : Fondamentaux indispensables et pourquoi non-negociables — sources d autorite citees. P2 : Chaque concept avec exemples concrets, applications reelles, donnees chiffrees. P3 : Articulation des fondamentaux pour creer une base solide. Entites connexes couvertes. 300-400 mots."},
+    {n:6,role:'OUTILS & RESSOURCES ESSENTIELS',consigne:"P1 : Meilleurs outils — integrer les liens internes sur des expressions naturelles du texte. P2 : Flux de travail concret, etapes, comment utiliser chaque outil. P3 : Astuces avancees que les debutants ne connaissent pas. Entites de contexte (marques/outils). 300-400 mots."},
+    {n:7,role:'TABLEAU COMPARATIF',consigne:"UNIQUEMENT : 1. Introduction 2-3 phrases. 2. Tableau comparatif (min 5 colonnes, 5 lignes de donnees reelles et chiffrees). 3. Synthese 2-3 phrases actionnables. RIEN D AUTRE."},
+    {n:8,role:'ERREURS CRITIQUES A EVITER',consigne:"P1 : 2-3 erreurs frequentes et couteuses — exemples reels de ce que les gens font et pourquoi ca echoue. P2 : Causes profondes — psychologie, mauvaises habitudes documentees. P3 : Solutions exactes et actionnables pour chaque erreur. 300-400 mots."}
+  ]},
+  3:{titre:'BLOC 3 — Chapitres 9 à 12 : Approfondissement Expert',chapitres:[
+    {n:9,role:'STRATEGIE AVANCEE NIVEAU 1',consigne:"P1 : Technique avancee et ce qui la differencie des approches classiques. P2 : Mecanisme precis — comment ca fonctionne, conditions requises, sources. P3 : Exemple d application reelle avec resultats mesurables. Lexique Platinium. Entites de confiance. 300-400 mots."},
+    {n:10,role:'CAS CONCRET & EXEMPLE REEL CHIFFRE',consigne:"P1 : Contexte du cas — qui, quoi, quel probleme, quelle periode. P2 : Etapes exactes suivies, outils utilises, decisions prises avec donnees chiffrees. P3 : Resultats obtenus avec metriques, lecons tirees, ce que le lecteur peut reproduire. 300-400 mots. E-E-A-T."},
+    {n:11,role:"L'ANGLE EXPERT — CE QUE LES AUTRES NE DISENT PAS",consigne:"P1 : Angle expert, pourquoi les autres contenus passent a cote — preuve par contraste. P2 : Developper avec preuves, exemples, donnees — ton confidentiel entre professionnels. P3 : Comment appliquer cet angle dans sa situation specifique. 300-400 mots."},
+    {n:12,role:'OPTIMISATION & KPIs — SECTION DATA (CPM PREMIUM)',consigne:"P1 : KPIs et indicateurs que peu mesurent vraiment — tableau de metriques avec valeurs cibles. P2 : Mise en place du suivi, outils, frequence, seuils d alerte. P3 : Interpreter les donnees et prendre des decisions d optimisation basees sur les chiffres. Lexique Platinium. Section data-driven obligatoire. 300-400 mots."}
+  ]},
+  4:{titre:'BLOC 4 — Chapitres 13 à 16 : Stratégie & Synthèse',chapitres:[
+    {n:13,role:'INTEGRATION DANS UNE STRATEGIE GLOBALE',consigne:"P1 : Comment ce sujet s integre dans l ecosysteme numerique global — synergies identifiees. P2 : Synergies concretes avec autres domaines — automatisation, infrastructure, gouvernance. P3 : Vision long terme, capitalisation sur cette integration. 300-400 mots."},
+    {n:14,role:'TENDANCES & EVOLUTION A VENIR',consigne:"P1 : 2-3 tendances majeures dans 12-24 mois — sources sectorielles citees. P2 : Impact concret sur les pratiques actuelles, ce qu il faut anticiper maintenant. P3 : Pourquoi agir maintenant donne un avantage competitif decisif. 300-400 mots."},
+    {n:15,role:"PLAN D'ACTION CONCRET",consigne:"Plan d action 5-7 etapes numerotees. Chaque etape : nom + pourquoi prioritaire + comment executer + resultat attendu + indicateur de succes. Du plus simple au plus complexe. 300-400 mots."},
+    {n:16,role:"LE COIN DES ASTUCES DES PRO + CTA DOUBLE",consigne:"P1 : 2-3 astuces pro exclusives que seuls les experts connaissent — avec conditions d application. P2 : Chaque astuce en detail, contexte exact, erreurs a eviter. P3 : Integrer les derniers liens internes naturellement. CONCLUSION : CTA primaire (produit/formation/partenariat) + CTA secondaire (article connexe en lien). Phrase de cloture editoriale forte. 300-400 mots."}
+  ]}
+};
+
+// ═══════════════════════════════════════════════════════
+// PROMPT BUILDER
+// ═══════════════════════════════════════════════════════
+function buildPrompt(n){
+  var iso = "### ISOLATION STRICTE — NOUVEAU SUJET ###\nTOPIC : "+inputs.topic+"\n\n";
+  var yt = getYT(inputs.transcript);
+  var linksStr = linksToPrompt(inputs.links);
+  var authorStr = inputs.author ? inputs.author : 'Auteur Astuces des Pro';
+  var today = new Date().toISOString().split('T')[0];
+
+  if(n<=4){
+    var bloc=ARCH[n]; var chapsDetail='';
+    for(var i=0;i<bloc.chapitres.length;i++){
+      var ch=bloc.chapitres[i]; var consigne=ch.consigne;
+      if(n===1&&ch.n===3){
+        if(yt){
+          var iframeLines=[
+            '<div class="video-container-empire">',
+            ' <div class="video-wrapper">',
+            '  <iframe src="https://www.youtube.com/embed/'+yt.id+'?rel=0&modestbranding=1&showinfo=0"',
+            '   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"',
+            '   allowfullscreen loading="lazy" title="'+inputs.topic.replace(/"/g,"'")+'" ></iframe>',
+            ' </div>',
+            ' <p class="video-caption"><strong>À voir :</strong> '+inputs.topic.replace(/"/g,"'")+'</p>',
+            '</div>',
+            '<style>',
+            '.video-container-empire{margin:35px 0}',
+            '.video-wrapper{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;max-width:100%;background:#000;border-radius:16px;box-shadow:0 20px 40px rgba(0,0,0,0.4)}',
+            '.video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}',
+            '.video-caption{text-align:center;font-size:14px;color:#666;margin-top:12px;font-style:italic}',
+            '</style>'
+          ];
+          window._chap3_iframe=iframeLines.join('\n');
+
+          var jsonLines=[
+            '<script type="application/ld+json">',
+            '{',
+            ' "@context":"https://schema.org",',
+            ' "@type":"VideoObject",',
+            ' "name":"'+inputs.topic.replace(/"/g,"'")+' ",',
+            ' "description":"'+inputs.topic.replace(/"/g,"'")+' — Guide complet strategie et mise en oeuvre.",',
+            ' "thumbnailUrl":["https://img.youtube.com/vi/'+yt.id+'/maxresdefault.jpg"],',
+            ' "uploadDate":"'+today+'",',
+            ' "embedUrl":"https://www.youtube.com/embed/'+yt.id+'",',
+            ' "contentUrl":"https://www.youtube.com/watch?v='+yt.id+'",',
+            ' "author":{"@type":"Person","name":"'+authorStr+'"},',
+            ' "publisher":{"@type":"Organization","name":"Astuces des Pro"}',
+            '}',
+            '<\/script>'
+          ];
+          window._chap3_jsonld=jsonLines.join('\n');
+          window._chap3_hasVideo=true;
+          consigne="L iframe et le JSON-LD VideoObject sont deja generes avec l auteur "+authorStr+". Redige UNIQUEMENT le COMMENTAIRE EDITORIAL de 150-200 mots : ce que la video revele, pourquoi incontournable, 3-4 insights cles. Style journaliste expert. E-E-A-T. Commencer directement sans titre.";
+        } else {
+          window._chap3_hasVideo=false;
+          consigne="Aucun lien YouTube. Rediger APPROFONDISSEMENT EXPERT : demonstration concrete, donnees reelles, exemple professionnel, perspective nouvelle. 3 paragraphes, 300-400 mots. Lexique Platinium. E-E-A-T.";
+        }
+      }
+      chapsDetail+="\n## Chapitre "+ch.n+" — "+ch.role+"\nCONSIGNE : "+consigne+"\n";
+    }
+    return {
+      title:bloc.titre,
+      prompt:iso+
+        "Redige les CHAPITRES "+((n-1)*4+1)+" a "+(n*4)+" de l article sur : \""+inputs.topic+"\".\n\n"+
+        "SOURCES : "+(inputs.transcript||'Non fourni')+".\n"+
+        "MOTS-CLES SEO : "+(inputs.seo||'Non fourni')+".\n"+
+        "INSIGHTS : "+(inputs.insight||'Non fourni')+".\n"+
+        "CONTEXTE : "+(inputs.context||'Non fourni')+".\n"+
+        "AUTEUR : "+authorStr+" (a integrer dans les signaux E-E-A-T).\n\n"+
+        "MAILLAGE INTERNE :\nInserer les liens comme hyperliens Markdown [expression naturelle](URL). PAS l URL brute. PAS en liste.\n"+
+        linksStr+"\n\n"+
+        "ARCHITECTURE :"+chapsDetail+"\n"+
+        "REGLES : H2 pour chaque chapitre, ancre id=chapitre-N, 3 paragraphes, 300-400 mots/chapitre, Lexique Platinium, E-E-A-T, zero CPC, francais professionnel."
+    };
+  }
+
+  // BLOC 5 — Pack SEO V5.0 with Schema Article + Person
+  var faqJsonEx=[
+    '<script type="application/ld+json">',
+    '{',
+    ' "@context":"https://schema.org",',
+    ' "@type":"FAQPage",',
+    ' "mainEntity":[',
+    '  {"@type":"Question","name":"QUESTION 1 ?","acceptedAnswer":{"@type":"Answer","text":"REPONSE 1 complete."}}',
+    '  ,{"@type":"Question","name":"QUESTION 2 ?","acceptedAnswer":{"@type":"Answer","text":"REPONSE 2 complete."}}',
+    '  ,{"@type":"Question","name":"QUESTION 3 ?","acceptedAnswer":{"@type":"Answer","text":"REPONSE 3 complete."}}',
+    '  ,{"@type":"Question","name":"QUESTION 4 ?","acceptedAnswer":{"@type":"Answer","text":"REPONSE 4 complete."}}',
+    '  ,{"@type":"Question","name":"QUESTION 5 ?","acceptedAnswer":{"@type":"Answer","text":"REPONSE 5 complete."}}',
+    ' ]',
+    '}',
+    '<\/script>'
+  ].join('\n');
+
+  var articleSchemaEx = [
+    '<script type="application/ld+json">',
+    '{',
+    ' "@context":"https://schema.org",',
+    ' "@type":"Article",',
+    ' "headline":"TITRE DE L ARTICLE",',
+    ' "description":"META DESCRIPTION",',
+    ' "datePublished":"'+today+'",',
+    ' "dateModified":"'+today+'",',
+    ' "author":{',
+    '  "@type":"Person",',
+    '  "name":"'+authorStr+'",',
+    '  "url":"https://astucesdespro.com/auteur"',
+    ' },',
+    ' "publisher":{',
+    '  "@type":"Organization",',
+    '  "name":"Astuces des Pro",',
+    '  "url":"https://astucesdespro.com"',
+    ' },',
+    ' "mainEntityOfPage":{"@type":"WebPage","@id":"https://astucesdespro.com/SLUG-URL"}',
+    '}',
+    '<\/script>'
+  ].join('\n');
+
+  return {
+    title:'BLOC 5 — PACK SEO & DISTRIBUTION V.5.0',
+    prompt:iso+
+      "Genere le Pack Final SEO & Distribution V5.0 pour : \""+inputs.topic+"\".\n"+
+      "MOT-CLE : "+(inputs.seo||inputs.topic)+".\n"+
+      "AUTEUR : "+authorStr+".\n\n"+
+      "REGLE ABSOLUE : sections dans l ordre exact, marqueurs sur leur propre ligne, zero commentaire.\n\n"+
+      "===INTRODUCTION===\n[120-150 mots. Accroche forte. Probleme central. Valeur apportee. Lexique Platinium. E-E-A-T.]\n\n"+
+      "===IMAGE_COUVERTURE===\n[Prompt EN ANGLAIS. Commencer par : \"Aspect ratio 16:9, 1920x1080px — \" puis : photorealistic premium, ambiance, couleurs, sujet, composition, eclairage. 100 mots max.]\n\n"+
+      "===IMAGE_INTERIEUR_1===\n[Prompt EN ANGLAIS. Commencer par : \"Aspect ratio 16:9, 1920x1080px — \" puis : illustratif ou conceptuel, aspect technique ou processus cle. 80 mots max.]\n\n"+
+      "===IMAGE_INTERIEUR_2===\n[Prompt EN ANGLAIS. Commencer par : \"Aspect ratio 16:9, 1920x1080px — \" puis : data-driven ou infographique, resultats, comparaison avant/apres. 80 mots max.]\n\n"+
+      "===TITRE_SEO===\n[UN SEUL TITRE. 55-65 caracteres. Intention B2B/tech/finance. Mot-cle inclus. Sans CPC.]\n\n"+
+      "===META_DESCRIPTION===\n[150-155 caracteres exactement. Mot-cle. CTA fort.]\n\n"+
+      "===15_TAGS===\n[15 tags virgule. Longue-traine + generiques.]\n\n"+
+      "===SLUG_URL===\n[1 slug. Minuscules, tirets, sans accents, max 6 mots.]\n\n"+
+      "===CONCLUSION===\n[150-200 mots. Points cles. Mot-cle. CTA primaire + CTA secondaire article connexe.]\n\n"+
+      "===10_FAQ===\n[10 Q&R. Format :\nQ: [question]\nR: [reponse 3-4 phrases]\n\nRepeter 10 fois. Couvrir : definition, comparaison, cout, mise en oeuvre, benefices, erreurs, tendances, ROI.]\n\n"+
+      "===FAQ_JSON===\n[JSON-LD FAQPage VALIDE. 5 meilleures questions. Suivre EXACTEMENT ce format :\n"+faqJsonEx+"\nJSON valide pret pour head WordPress.]\n\n"+
+      "===SCHEMA_ARTICLE===\n[JSON-LD Article VALIDE. Remplacer TITRE, META DESCRIPTION, SLUG-URL par les valeurs generees ci-dessus. Suivre EXACTEMENT ce format :\n"+articleSchemaEx+"\nPret pour head WordPress.]\n\n"+
+      "===POST_FACEBOOK===\n[80 mots EXACTEMENT. Accroche. 2-3 emojis. Question finale. 3 hashtags.]\n\n"+
+      "===TWEET_X===\n[Max 280 caracteres. Fait choc + insight + [URL] + 2 hashtags.]\n\n"+
+      "===EMAIL_NEWSLETTER===\n[OBJET: [6-8 mots]\nPREHEADER: [40-50 caracteres]\nCORPS: [120-150 mots. Bonjour [Prenom], probleme, solution=article, 1 benefice chiffre, CTA Lire ->]]\n\n"+
+      "===PINTEREST_DESC===\n[150-200 mots. Accroche visuelle, benefices, mots-cles naturels, 5 hashtags.]\n\n"+
+      "===FIN_PACK==="
+  };
+}
+
+// ═══════════════════════════════════════════════════════
+// API CALL — Gemini + Claude
+// ═══════════════════════════════════════════════════════
+function genBlock(){
+  if(isGen||blocks.length>=5) return;
+  var key = getActiveKey();
+  if(!key){ toggleSettings(); alert('Configurez votre clé API '+(curProvider==='gemini'?'Gemini':'Claude')+'.'); return; }
+  isGen=true; updGenBtn();
+  var n=blocks.length+1;
+  var built=buildPrompt(n);
+  var ctrl=new AbortController();
+  var timer=setTimeout(function(){ ctrl.abort(); }, 110000);
+
+  var fetchPromise;
+  if(curProvider==='gemini'){
+    fetchPromise = callGemini(built, key, ctrl);
+  } else {
+    fetchPromise = callClaude(built, key, ctrl);
+  }
+
+  fetchPromise
+    .then(function(content){
+      clearTimeout(timer);
+      blocks.push({title:built.title, content:content, model:curModel, provider:curProvider, ts:Date.now()});
+      localStorage.setItem('eva_blocks', JSON.stringify(blocks));
+      localStorage.setItem('eva_last_session_time', Date.now());
+      renderBlocs(); updProgress();
+    })
+    .catch(function(e){
+      clearTimeout(timer);
+      var msg = e.name==='AbortError'
+        ? 'Timeout 110s.\nSolutions :\n- Essayer un modèle plus rapide\n- Réduire la transcription\n- Réessayer'
+        : 'Erreur API ('+curProvider+')\n'+e.message+'\n\nVérifiez : clé API, modèle disponible, quota';
+      alert(msg);
+    })
+    .finally(function(){ isGen=false; updGenBtn(); });
+}
+
+function callGemini(built, key, ctrl){
+  return fetch('https://generativelanguage.googleapis.com/v1beta/models/'+curModel+':generateContent?key='+key, {
+    method:'POST', signal:ctrl.signal,
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      contents:[{role:'user', parts:[{text:SYS+'\n\n'+built.prompt}]}],
+      generationConfig:{temperature:0.7, maxOutputTokens:4096}
+    })
+  }).then(function(res){
+    if(!res.ok) return res.json().then(function(e){ throw new Error(e.error&&e.error.message?e.error.message:'HTTP '+res.status); });
+    return res.json();
+  }).then(function(data){
+    if(!data.candidates||!data.candidates[0]) throw new Error('Aucune réponse. Vérifiez clé et quota Gemini.');
+    var content = data.candidates[0].content&&data.candidates[0].content.parts&&data.candidates[0].content.parts[0].text;
+    if(!content) throw new Error('Contenu vide reçu.');
+    return content;
+  });
+}
+
+function callClaude(built, key, ctrl){
+  return fetch('https://api.anthropic.com/v1/messages', {
+    method:'POST', signal:ctrl.signal,
+    headers:{
+      'Content-Type':'application/json',
+      'x-api-key': key,
+      'anthropic-version':'2023-06-01',
+      'anthropic-dangerous-direct-browser-access':'true'
+    },
+    body:JSON.stringify({
+      model: curModel,
+      max_tokens: 4096,
+      system: SYS,
+      messages:[{role:'user', content: built.prompt}]
+    })
+  }).then(function(res){
+    if(!res.ok) return res.json().then(function(e){ throw new Error(e.error&&e.error.message?e.error.message:'HTTP '+res.status); });
+    return res.json();
+  }).then(function(data){
+    if(!data.content||!data.content[0]) throw new Error('Aucune réponse Claude. Vérifiez clé et quota Anthropic.');
+    var content = data.content[0].text;
+    if(!content) throw new Error('Contenu vide reçu de Claude.');
+    return content;
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+// PACK SEO SECTIONS
+// ═══════════════════════════════════════════════════════
+var PSECS=[
+  {key:'INTRODUCTION', label:"Introduction de l'article", icon:'📝',type:'intro'},
+  {key:'IMAGE_COUVERTURE', label:'Prompt Image Couverture 16:9', icon:'🖼',type:'image'},
+  {key:'IMAGE_INTERIEUR_1',label:'Prompt Image Intérieure 1 — 16:9', icon:'🎨',type:'image'},
+  {key:'IMAGE_INTERIEUR_2',label:'Prompt Image Intérieure 2 — 16:9', icon:'🎨',type:'image'},
+  {key:'TITRE_SEO', label:'Titre SEO — Enchères Premium', icon:'🎯',type:'seo',gold:true},
+  {key:'META_DESCRIPTION', label:'Meta Description (150-155 car.)', icon:'🔍',type:'seo'},
+  {key:'15_TAGS', label:'15 Tags WordPress / YouTube', icon:'🏷',type:'struct'},
+  {key:'SLUG_URL', label:'Slug URL Optimisé', icon:'🔗',type:'struct'},
+  {key:'CONCLUSION', label:'Conclusion + CTA Double', icon:'✍',type:'struct'},
+  {key:'10_FAQ', label:'10 FAQ — Intentions à Forte Valeur', icon:'❓',type:'faq'},
+  {key:'FAQ_JSON', label:'JSON-LD 5 FAQ — Rich Snippets Google', icon:'</>',type:'faq'},
+  {key:'SCHEMA_ARTICLE', label:'Schema Article + Auteur — JSON-LD E-E-A-T', icon:'🔐',type:'schema'},
+  {key:'POST_FACEBOOK', label:'Post Facebook — 80 mots', icon:'📘',type:'social'},
+  {key:'TWEET_X', label:'Tweet X — 280 caractères max', icon:'𝕏',type:'social'},
+  {key:'EMAIL_NEWSLETTER', label:'Email Newsletter — Objet + Corps', icon:'📧',type:'social'},
+  {key:'PINTEREST_DESC', label:'Description Pinterest — 200 mots', icon:'📌',type:'social'}
+];
+
+function parsePack(raw){
+  var res=[];
+  for(var i=0;i<PSECS.length;i++){
+    var s=PSECS[i]; var mk='==='+s.key+'===';
+    var nmk=i+1<PSECS.length?'==='+PSECS[i+1].key+'===':'===FIN_PACK===';
+    var st=raw.indexOf(mk); if(st===-1) continue;
+    var en=raw.indexOf(nmk,st);
+    var cont=en!==-1?raw.slice(st+mk.length,en).trim():raw.slice(st+mk.length).replace('===FIN_PACK===','').trim();
+    if(s.key==='10_FAQ'){
+      var lines=cont.split('\n'); var fmted=[];
+      for(var li=0;li<lines.length;li++){
+        var ln=lines[li].trim(); if(!ln) continue;
+        if(ln.match(/^Q\s*:/i)){ fmted.push(''); fmted.push(ln); }
+        else if(ln.match(/^R\s*:/i)){ fmted.push(ln); fmted.push(''); }
+        else fmted.push(ln);
+      }
+      cont=fmted.join('\n').trim();
+    }
+    res.push({key:s.key, label:s.label, icon:s.icon, type:s.type, gold:s.gold||false, cont:cont});
+  }
+  return res.length>=3?res:null;
+}
+
+// ═══════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════
+function splitChaps(md){
+  var lines=md.split('\n'); var chaps=[]; var cur=null;
+  for(var i=0;i<lines.length;i++){
+    var line=lines[i];
+    if(line.match(/^##\s+/)){
+      if(cur&&cur.lines.join('').trim()) chaps.push(cur);
+      cur={title:line.replace(/^##\s+/,'').trim(), lines:[line]};
+    } else {
+      if(cur) cur.lines.push(line);
+      else cur={title:'Intro', lines:[line]};
+    }
+  }
+  if(cur&&cur.lines.join('').trim()) chaps.push(cur);
+  return chaps;
+}
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function renderBlocs(){
+  var area=document.getElementById('blocs'); var html='';
+  for(var i=0;i<blocks.length;i++){
+    var b=blocks[i];
+    var isPack=b.title.indexOf('PACK SEO')!==-1||b.title.indexOf('BLOC 5')!==-1;
+    var parsed=isPack?parsePack(b.content):null;
+    var chaps=!isPack?splitChaps(b.content):[];
+    var providerColor = b.provider==='claude'?'var(--purple)':'var(--b500)';
+    html+='<div class="card bcard" id="bloc-'+i+'">';
+    html+='<div class="bhead"><div style="display:flex;align-items:center;gap:12px">';
+    html+='<div class="bnum">'+(i+1)+'</div>';
+    html+='<div><div class="fd" style="font-weight:800;font-size:14px;color:var(--b900)">'+esc(b.title)+'</div>';
+    if(b.model) html+='<div style="font-size:9px;color:var(--ts);margin-top:2px;display:flex;align-items:center;gap:4px"><span style="color:'+providerColor+';font-weight:700">'+(b.provider||'gemini').toUpperCase()+'</span> · '+esc(b.model)+'</div>';
+    html+='</div></div>';
+    html+='<button class="btn-cp" onclick="cpBloc(this,'+i+')">COPIER TOUT LE BLOC</button>';
+    html+='</div>';
+    if(isPack&&parsed) html+=renderPack(parsed,i);
+    else if(chaps.length>1) html+=renderChaps(chaps,i);
+    else html+='<div style="padding:20px 24px" class="prose">'+marked.parse(b.content)+'</div>';
+    html+='</div>';
+  }
+  area.innerHTML=html; updGenBtn();
+}
+
+function renderChaps(chaps,bi){
+  var html='';
+  for(var ci=0;ci<chaps.length;ci++){
+    var c=chaps[ci]; var md=c.lines.join('\n');
+    html+='<div class="chap"><div class="chap-hd">';
+    html+='<div style="display:flex;align-items:center"><div class="chap-n">'+(ci+1)+'</div>';
+    html+='<div class="chap-t">'+esc(c.title)+'</div></div>';
+    html+='<button class="btn-cp" onclick="cpChap(this)">COPIER CE CHAPITRE</button>';
+    html+='</div>';
+    if(bi===0&&ci===2&&window._chap3_hasVideo){
+      html+='<div style="border-bottom:1px solid var(--s100)">';
+      html+='<div style="display:flex;justify-content:space-between;align-items:center;padding:11px 24px;background:#fffbeb;border-bottom:1px solid #fde68a">';
+      html+='<div style="display:flex;align-items:center;gap:8px"><span>▶️</span>';
+      html+='<span class="fd" style="font-weight:700;font-size:11px;color:#92400e">Code iframe YouTube — Coller dans WordPress</span></div>';
+      html+='<button class="btn-cp" onclick="cpRaw(this,window._chap3_iframe)">COPIER L\'IFRAME</button>';
+      html+='</div>';
+      html+='<pre style="background:var(--b950);color:#93cbff;padding:16px 24px;font-size:11px;overflow-x:auto;margin:0;line-height:1.6;white-space:pre-wrap">'+esc(window._chap3_iframe)+'</pre>';
+      html+='</div>';
+      html+='<div style="border-bottom:1px solid var(--s100)">';
+      html+='<div style="display:flex;justify-content:space-between;align-items:center;padding:11px 24px;background:#f0fdf4;border-bottom:1px solid #a7f3d0">';
+      html+='<div style="display:flex;align-items:center;gap:8px"><span>📋</span>';
+      html+='<span class="fd" style="font-weight:700;font-size:11px;color:#065f46">JSON-LD VideoObject — Coller dans &lt;head&gt; WordPress</span></div>';
+      html+='<button class="btn-cp" onclick="cpRaw(this,window._chap3_jsonld)">COPIER LE JSON-LD</button>';
+      html+='</div>';
+      html+='<pre style="background:var(--b950);color:#93cbff;padding:16px 24px;font-size:11px;overflow-x:auto;margin:0;line-height:1.6;white-space:pre-wrap">'+esc(window._chap3_jsonld)+'</pre>';
+      html+='</div>';
+      html+='<div style="padding:6px 24px 4px;background:var(--b50);border-bottom:1px solid var(--b100)">';
+      html+='<span class="fd" style="font-size:9px;font-weight:700;color:var(--b700);text-transform:uppercase;letter-spacing:1px">✍️ Commentaire éditorial — généré par l\'IA</span>';
+      html+='</div>';
+    }
+    html+='<div class="chap-bd prose">'+marked.parse(md)+'</div>';
+    html+='</div>';
+  }
+  return html;
+}
+
+function renderPack(secs,bi){
+  var hdr='<div style="background:linear-gradient(135deg,#ecfdf5,#f0fdf4);border:1.5px solid #a7f3d0;border-radius:12px;padding:14px 18px;margin:20px 24px 0">';
+  hdr+='<div class="fd" style="font-weight:800;font-size:13px;color:#065f46">✅ Pack SEO V.5.0 — E-E-A-T · Schema Article · Position Zéro · CPM Premium</div>';
+  hdr+='<p style="font-size:11px;color:#047857;margin-top:4px">Titre Premium · 3 prompts 16:9 · 10 FAQ + JSON-LD FAQPage + Schema Article · Facebook · Tweet X · Email · Pinterest</p></div>';
+  var sHTML='';
+  for(var si=0;si<secs.length;si++){
+    var s=secs[si];
+    var isSchema = s.type==='schema';
+    var cls = isSchema ? 'pcont schema-box' : (s.key==='INTRODUCTION'?'pcont intro-box':(s.gold?'pcont gold':'pcont'));
+    sHTML+='<div class="psec"><div class="psec-hd">';
+    sHTML+='<div style="display:flex;align-items:center"><span class="psec-ico">'+s.icon+'</span>';
+    sHTML+='<span class="psec-ttl">'+s.label+'</span>';
+    sHTML+='<span class="ptag pt-'+s.type+'">'+s.type.toUpperCase()+'</span></div>';
+    sHTML+='<button class="btn-cp" onclick="cpFromSibling(this)">COPIER</button>';
+    sHTML+='</div><div class="'+cls+' packtext">'+esc(s.cont)+'</div></div>';
+  }
+  return hdr+'<div class="pwrap">'+sHTML+'</div>';
+}
+
+// ═══════════════════════════════════════════════════════
+// COPY FUNCTIONS
+// ═══════════════════════════════════════════════════════
+function cpBloc(btn,idx){ var t=blocks[idx]?blocks[idx].content:''; if(!t){ alert('Bloc introuvable.'); return; } cpExec(btn,t); }
+function cpChap(btn){
+  var hd=btn.closest?btn.closest('.chap-hd'):btn.parentNode;
+  var ch=hd?hd.parentNode:null;
+  var bd=ch?ch.querySelector('.chap-bd'):null;
+  if(!bd){ alert('Chapitre introuvable.'); return; }
+  cpExec(btn,bd.textContent||bd.innerText);
+}
+function cpFromSibling(btn){
+  var hd=btn.closest?btn.closest('.psec-hd'):btn.parentNode;
+  var ps=hd?hd.parentNode:null;
+  var ct=ps?ps.querySelector('.packtext'):null;
+  if(!ct){ alert('Section introuvable.'); return; }
+  cpExec(btn,ct.textContent||ct.innerText);
+}
+function cpRaw(btn,text){ if(!text){ alert('Contenu introuvable.'); return; } cpExec(btn,text); }
+function cpExec(btn,text){
+  var done=function(){ var o=btn.textContent; btn.textContent='Copié !'; btn.classList.add('ok'); setTimeout(function(){ btn.textContent=o; btn.classList.remove('ok'); },2000); };
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(done).catch(function(){ fallbackCopy(text); done(); }); }
+  else{ fallbackCopy(text); done(); }
+}
+function fallbackCopy(text){
+  var ta=document.createElement('textarea'); ta.value=text; ta.style.cssText='position:fixed;top:0;left:0;opacity:0';
+  document.body.appendChild(ta); ta.focus(); ta.select(); try{ document.execCommand('copy'); }catch(e){} document.body.removeChild(ta);
+}
+
+// ═══════════════════════════════════════════════════════
+// DOWNLOAD
+// ═══════════════════════════════════════════════════════
+function dlArticle(){
+  var full=blocks.map(function(b){ return '# '+b.title+'\n\n'+b.content; }).join('\n\n---\n\n');
+  var blob=new Blob([full],{type:'text/markdown'}); var url=URL.createObjectURL(blob);
+  var a=document.createElement('a'); a.href=url; a.download='Empire50-'+Date.now()+'.md'; a.click();
+}
+
+// PDF Guide — served directly from outputs
+function dlGuide(){
+  // PDF intégré en base64 — téléchargement direct, aucun lien externe
+  var b64="JVBERi0xLjQKJZOMi54gUmVwb3J0TGFiIEdlbmVyYXRlZCBQREYgZG9jdW1lbnQgKG9wZW5zb3VyY2UpCjEgMCBvYmoKPDwKL0YxIDIgMCBSIC9GMiAzIDAgUiAvRjMgNCAwIFIgL0Y0IDkgMCBSIC9GNSAxMSAwIFIKPj4KZW5kb2JqCjIgMCBvYmoKPDwKL0Jhc2VGb250IC9IZWx2ZXRpY2EgL0VuY29kaW5nIC9XaW5BbnNpRW5jb2RpbmcgL05hbWUgL0YxIC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKMyAwIG9iago8PAovQmFzZUZvbnQgL0hlbHZldGljYS1Cb2xkIC9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nIC9OYW1lIC9GMiAvU3VidHlwZSAvVHlwZTEgL1R5cGUgL0ZvbnQKPj4KZW5kb2JqCjQgMCBvYmoKPDwKL0Jhc2VGb250IC9aYXBmRGluZ2JhdHMgL05hbWUgL0YzIC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKNSAwIG9iago8PAovQ29udGVudHMgMjAgMCBSIC9NZWRpYUJveCBbIDAgMCA1OTUuMjc1NiA4NDEuODg5OCBdIC9QYXJlbnQgMTkgMCBSIC9SZXNvdXJjZXMgPDwKL0ZvbnQgMSAwIFIgL1Byb2NTZXQgWyAvUERGIC9UZXh0IC9JbWFnZUIgL0ltYWdlQyAvSW1hZ2VJIF0KPj4gL1JvdGF0ZSAwIC9UcmFucyA8PAoKPj4gCiAgL1R5cGUgL1BhZ2UKPj4KZW5kb2JqCjYgMCBvYmoKPDwKL0NvbnRlbnRzIDIxIDAgUiAvTWVkaWFCb3ggWyAwIDAgNTk1LjI3NTYgODQxLjg4OTggXSAvUGFyZW50IDE5IDAgUiAvUmVzb3VyY2VzIDw8Ci9Gb250IDEgMCBSIC9Qcm9jU2V0IFsgL1BERiAvVGV4dCAvSW1hZ2VCIC9JbWFnZUMgL0ltYWdlSSBdCj4+IC9Sb3RhdGUgMCAvVHJhbnMgPDwKCj4+IAogIC9UeXBlIC9QYWdlCj4+CmVuZG9iago3IDAgb2JqCjw8Ci9Db250ZW50cyAyMiAwIFIgL01lZGlhQm94IFsgMCAwIDU5NS4yNzU2IDg0MS44ODk4IF0gL1BhcmVudCAxOSAwIFIgL1Jlc291cmNlcyA8PAovRm9udCAxIDAgUiAvUHJvY1NldCBbIC9QREYgL1RleHQgL0ltYWdlQiAvSW1hZ2VDIC9JbWFnZUkgXQo+PiAvUm90YXRlIDAgL1RyYW5zIDw8Cgo+PiAKICAvVHlwZSAvUGFnZQo+PgplbmRvYmoKOCAwIG9iago8PAovQ29udGVudHMgMjMgMCBSIC9NZWRpYUJveCBbIDAgMCA1OTUuMjc1NiA4NDEuODg5OCBdIC9QYXJlbnQgMTkgMCBSIC9SZXNvdXJjZXMgPDwKL0ZvbnQgMSAwIFIgL1Byb2NTZXQgWyAvUERGIC9UZXh0IC9JbWFnZUIgL0ltYWdlQyAvSW1hZ2VJIF0KPj4gL1JvdGF0ZSAwIC9UcmFucyA8PAoKPj4gCiAgL1R5cGUgL1BhZ2UKPj4KZW5kb2JqCjkgMCBvYmoKPDwKL0Jhc2VGb250IC9TeW1ib2wgL05hbWUgL0Y0IC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKMTAgMCBvYmoKPDwKL0NvbnRlbnRzIDI0IDAgUiAvTWVkaWFCb3ggWyAwIDAgNTk1LjI3NTYgODQxLjg4OTggXSAvUGFyZW50IDE5IDAgUiAvUmVzb3VyY2VzIDw8Ci9Gb250IDEgMCBSIC9Qcm9jU2V0IFsgL1BERiAvVGV4dCAvSW1hZ2VCIC9JbWFnZUMgL0ltYWdlSSBdCj4+IC9Sb3RhdGUgMCAvVHJhbnMgPDwKCj4+IAogIC9UeXBlIC9QYWdlCj4+CmVuZG9iagoxMSAwIG9iago8PAovQmFzZUZvbnQgL0NvdXJpZXIgL0VuY29kaW5nIC9XaW5BbnNpRW5jb2RpbmcgL05hbWUgL0Y1IC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKMTIgMCBvYmoKPDwKL0NvbnRlbnRzIDI1IDAgUiAvTWVkaWFCb3ggWyAwIDAgNTk1LjI3NTYgODQxLjg4OTggXSAvUGFyZW50IDE5IDAgUiAvUmVzb3VyY2VzIDw8Ci9Gb250IDEgMCBSIC9Qcm9jU2V0IFsgL1BERiAvVGV4dCAvSW1hZ2VCIC9JbWFnZUMgL0ltYWdlSSBdCj4+IC9Sb3RhdGUgMCAvVHJhbnMgPDwKCj4+IAogIC9UeXBlIC9QYWdlCj4+CmVuZG9iagoxMyAwIG9iago8PAovQ29udGVudHMgMjYgMCBSIC9NZWRpYUJveCBbIDAgMCA1OTUuMjc1NiA4NDEuODg5OCBdIC9QYXJlbnQgMTkgMCBSIC9SZXNvdXJjZXMgPDwKL0ZvbnQgMSAwIFIgL1Byb2NTZXQgWyAvUERGIC9UZXh0IC9JbWFnZUIgL0ltYWdlQyAvSW1hZ2VJIF0KPj4gL1JvdGF0ZSAwIC9UcmFucyA8PAoKPj4gCiAgL1R5cGUgL1BhZ2UKPj4KZW5kb2JqCjE0IDAgb2JqCjw8Ci9Db250ZW50cyAyNyAwIFIgL01lZGlhQm94IFsgMCAwIDU5NS4yNzU2IDg0MS44ODk4IF0gL1BhcmVudCAxOSAwIFIgL1Jlc291cmNlcyA8PAovRm9udCAxIDAgUiAvUHJvY1NldCBbIC9QREYgL1RleHQgL0ltYWdlQiAvSW1hZ2VDIC9JbWFnZUkgXQo+PiAvUm90YXRlIDAgL1RyYW5zIDw8Cgo+PiAKICAvVHlwZSAvUGFnZQo+PgplbmRvYmoKMTUgMCBvYmoKPDwKL0NvbnRlbnRzIDI4IDAgUiAvTWVkaWFCb3ggWyAwIDAgNTk1LjI3NTYgODQxLjg4OTggXSAvUGFyZW50IDE5IDAgUiAvUmVzb3VyY2VzIDw8Ci9Gb250IDEgMCBSIC9Qcm9jU2V0IFsgL1BERiAvVGV4dCAvSW1hZ2VCIC9JbWFnZUMgL0ltYWdlSSBdCj4+IC9Sb3RhdGUgMCAvVHJhbnMgPDwKCj4+IAogIC9UeXBlIC9QYWdlCj4+CmVuZG9iagoxNiAwIG9iago8PAovQ29udGVudHMgMjkgMCBSIC9NZWRpYUJveCBbIDAgMCA1OTUuMjc1NiA4NDEuODg5OCBdIC9QYXJlbnQgMTkgMCBSIC9SZXNvdXJjZXMgPDwKL0ZvbnQgMSAwIFIgL1Byb2NTZXQgWyAvUERGIC9UZXh0IC9JbWFnZUIgL0ltYWdlQyAvSW1hZ2VJIF0KPj4gL1JvdGF0ZSAwIC9UcmFucyA8PAoKPj4gCiAgL1R5cGUgL1BhZ2UKPj4KZW5kb2JqCjE3IDAgb2JqCjw8Ci9QYWdlTW9kZSAvVXNlTm9uZSAvUGFnZXMgMTkgMCBSIC9UeXBlIC9DYXRhbG9nCj4+CmVuZG9iagoxOCAwIG9iago8PAovQXV0aG9yIChcKGFub255bW91c1wpKSAvQ3JlYXRpb25EYXRlIChEOjIwMjYwNDIwMDcwODQ5KzAwJzAwJykgL0NyZWF0b3IgKFwodW5zcGVjaWZpZWRcKSkgL0tleXdvcmRzICgpIC9Nb2REYXRlIChEOjIwMjYwNDIwMDcwODQ5KzAwJzAwJykgL1Byb2R1Y2VyIChSZXBvcnRMYWIgUERGIExpYnJhcnkgLSBcKG9wZW5zb3VyY2VcKSkgCiAgL1N1YmplY3QgKFwodW5zcGVjaWZpZWRcKSkgL1RpdGxlIChcKGFub255bW91c1wpKSAvVHJhcHBlZCAvRmFsc2UKPj4KZW5kb2JqCjE5IDAgb2JqCjw8Ci9Db3VudCAxMCAvS2lkcyBbIDUgMCBSIDYgMCBSIDcgMCBSIDggMCBSIDEwIDAgUiAxMiAwIFIgMTMgMCBSIDE0IDAgUiAxNSAwIFIgMTYgMCBSIF0gL1R5cGUgL1BhZ2VzCj4+CmVuZG9iagoyMCAwIG9iago8PAovRmlsdGVyIFsgL0FTQ0lJODVEZWNvZGUgL0ZsYXRlRGVjb2RlIF0gL0xlbmd0aCA4OTAKPj4Kc3RyZWFtCkdhdCR1Z01ZXzEmOk5ebGspaSxCXUQidFVCXU4na1ZCcSlMVm4+ITY2WD42UGBobFlLXjlcJCZTSClQdXE2SmtmUzkmOmMoZjdrSW86MnVhNTAqMF8kTm5CbElLOmRQS19SVnNuUisuXCM+PDx1RzIrZitTLmU+RjZiZ0o5PVRfLHRLP1xwQzdAYVYhMyllTjNpQmhOM1RqLyFbLVltLkw2TCM7O2k0cm4rSmQyUywnIUFhUEJHJS1yTjooPCxMQyE9ZltwUSR0LDU9U0BUY1lFViI3WmhacVItXC9yXUVBXSxuWWB0TVpnRUdYVDkmQig8TE08TUNYTWRYSiN1Yl1JI288bjY2PkBwZTdGcyMvMGEiLVp0YCRRa3VncmRUPFkqbDRWTW1VIkZFbHE2SywwR0lrWFkkWSRaVFFbKCIxKUpmVGwjXTdLYm5sQzRyVThLJShkTFx1U29dJ2RnY2kiVlddT3RkVjpSaUFrIlQzT2lQWSd1IWNzdVxdVlcvPlg/QXBDRlckPF1OSFVDNzZBIjQxKUtQOm4iLXIoVl4nRy4xPVRjK0ImOzJ1XVBLQEdWbVZBNSYvOzBtSnRcX2AiNWtJUyM0QTROK2QzIj0vQDtsVzNBN0YtOkkyZEJccCk0bShkTG5XKjsuQkA6ITRJK2dlVFx0KXViZFUqSXFNQ1ZgYCg7Kl5IJiMpMnItLEhsV1k0dFg2Z3VwOktcJSFqOF9NTSgrJUIoJU41TEI1S1hrQThnTUxuRl1JJChQNVlPYVQncyIuUTJSUW9mXUsuLlYmblNVTi4oNE1pJkNcOSEuUCtETkJHP0hHVURTJHFbQ19UWj1bbmRjaWs7PjJCc09sW0VfZiMiXD1NR0E9PXNKKF1JaksuLjFtPSFIPXNEJEhHKHJSYi87MCRaOS80Py47RShiXjY5bzluTWUsXD5hY2lJJ0FXUDVtK2ctakdCKCREYShCc0lzM29oQ0hFdWo9Uy4/aWRHNjpxRCVBamhaPDowWTw3SSk8PGM0SiFhaDtlNjxvRFswQDxuLS0+YClDcXEwTTA7aEsyJGgsa3RoSXVGZDJZSHE4TUJQNllWbkooJHFoSnA9JWZgbkVFY1JqIk1GaFksSzdqZ0EtNVttIyVtX2orbjJnVkdZQD5sKjVoL0lBZTpRUFZAJzBfMSxnJ1VKcX4+ZW5kc3RyZWFtCmVuZG9iagoyMSAwIG9iago8PAovRmlsdGVyIFsgL0FTQ0lJODVEZWNvZGUgL0ZsYXRlRGVjb2RlIF0gL0xlbmd0aCA4NjIKPj4Kc3RyZWFtCkdhdG4jPnUwMy8nU2MpUi8nXS9EOS9HPHNkWT00dDJPTi5MISJuVXUyb111RSVqcWpxX3BFbDJOZyU9LiIiZnRBOD0mOnNvMDI/VExCPjtRRywodTlOXzRQPzZAZ20/UVUnIkZMJTVZNGJMLF41REdLPUZhVTstR1ItKWtOKDN0SypFJyMzXC47Ilo8N1BlOkJmSGFycSQ/ZTluUE9xXmBOITplcz9wTzxZSmQkXl0tPy5aKzhhIixcX0pMZ15cOCU3bm48SnA+V1s1PThMW2tcN0RaXCctSVA5WmFzMWknRWEkR2JYTFFfdDUsZ0dTLGNDayhBZDUtbTdJJDJrcSNELmpBbCUhIUFLWjstYW5NcGtSMi1QO0Jpc1pIcGUoLWZwPXBwWUoycSE7WlRzOm4kUywzWSUiWEVOWVIkQy41YjZLW2wtZEI9cEMicGBkbUJvdF1xJm8uQWdMLmpLPVNKK2Qhb0ZIJVUkWTwia04iOjBDS01LWltAM2tNKSJjXExpQU5lKiwsQ1FKKW1EKi1lamQvWzViKU9RJFpVWGshJFJDLjBHL0NyLTNdI0lAcCtcR1FxXi4xUyxKVFhubFFbbzhRaFJXazhRMDlwYnVBPy9ZNEYmLjAybjdAKFFRSTpBUDViRVc2IyZYRWdSJ2BZXio+bWxdU3I9PGxCNmUicyNbZ2FjPDVeQDBQcSJQOlM/OyIpKWZtZ2ZFRGFfbFtfKDJ1MScrYElbMC1hZFksPWlvQzw/czlhVT0vOGo2L1w4MEY2IT5kQ2xOVTRhRkxUYmAvYT9mKGZxMWRbLD9bOT0uMSxwNGYtOi0jZkVLO15uKWJPbm1pLHVnVihXWF9fcTVqXS9VUCc3LCpPYWlPRW1ZZSpvMiM0JkhiNSciYVY6R2tgK15eL0c/VTtHSVs1clhxK3RoUE1OTldhRjp0RToiUiM+T1VqWG86ZUF1QzpfYmw5YCckLG42dFlKbCIpITtIbTxvRDhZS2puQmNUVmhJYzNmRkxpOlVdRTlzXVdSZ1sxI18jT107SnMuT3FtQm8jQ0FcT00/OFZRUSwpMmttYzQsNlRLSyVVZGZgREBNVFI5JXFQOyNOSlxdLCc3TFteM18+OylRdFhQNjgibj43TXUoLlJSdGw3fj5lbmRzdHJlYW0KZW5kb2JqCjIyIDAgb2JqCjw8Ci9GaWx0ZXIgWyAvQVNDSUk4NURlY29kZSAvRmxhdGVEZWNvZGUgXSAvTGVuZ3RoIDEyNjUKPj4Kc3RyZWFtCkdhdTBCOTY4aUcmQUlJM20uYUk9JztLZGArT1FaJjQhJD4oU0FhXGUoS3VEKlVfRzlMT1oqJS4/JT5fa1ZRSGBcRTluMUBmXExKXEkvalsoSWElaCFEI3JLRWk3R0ZIKGwtJ05ZXmNrXFw6aDMtakY0dDdQRFUkTVxSbERRTz4qZG5sQ2pTQThUYi9oRUAsW2RFJDtiJStRI2w+LGpXKzVUWVc0a2k0dFMkXzQ/My0tU1dscDQxaEtfXD9vQkc5P29ubC1WR1VjIU9FOlFhMD49P01jVUQyOCxTczEsNmEybDwiQDQmIzZOSHM1ZUpZQjY/QnBvKSdJY2FVYltmS2lNQFEiNShKIW5vLHFdOClrOlFvLThCSVdbUGtPP1RdQzFwQGMzLEJPTm5aK2NAYUZERldPJXVLZGU2IzkrcGg6TUNKbCJnJnEiX2UoPkZJW0MtdCtHXnM9aUQ+LTpjKyZLPT84bUMoNmldNy41ZF90IUQlREpUX21aTTopVyk8XkpUMzdONVVSK2lXTGBfUjNpPGpGNyZRQkNQLiRkZFdCNT5xXEpSLzJAYWs9Wi1wdVllZWdVYGIpTzdyWFdgNTFYRyNiOG5LIVFjdXQ8U0hMa0soJGZ1XmttZ3JDJi5xcUImRCFycU8rT1hTcWFYL0lsLVVMZSgiImVuKjI3Jl43J0cxXDpgXklFRCRBIipDTmhqWV1bXmg9YCtVUzpUdE42S3MwKFcsQGQnPiJsLE9qWlJNdThNbHNpallrcnQ1KUo9WEMqP1UvbVhvJ20laXNlYkU9XiQ6IllvWyEhLnJoc1QwPmojWG9lP0JjcTZBKWosL15yJ1tnO190Kz5PcUJvTnFobyVCaEJYPS07c3FbcGtETCtfPmFEJj5HZSszNUo5bilAJ15uJHBsJGM6VmpmPD1pSSFcUigvP1ApLVJZa1Z1ci8wKzNnbCdCMjc3ZShnYmYzYk4jNF41YSgoYGJCM01oMmJWW0AmM0IoZDRQLmxYO28/PFksIkE6NFdBcmtIRHJDJzZLUDFzPC49bC5JS04rWjxrJ1JrKkZXQHJrTzgoKDwjTWkvWU4rNURWK0A3MWxkJThkJTRiZU0kJD8pLTxwdFNbQkpWZSpwUSwkZTprJUoubC5ENFJgVkhfZklpZ2pBRWYrQCxBPy9bVDouLSNDaWtOYC9kIilXVEhidUc8dGcxVSRDWC9qcU5lInBGXGNIaVhHaEBDXUNlPm90aFpZKElPWjM2RW88OVdeLTc8IkhlV0A3bDpQMzUyRWNcRUppakhKb1xcQU5XImZ1MmIwKGpQOk8sbyFQQS8wMFgvYDBiaCptOiI2MWJMbXU4QjRJQVU8I1k/Vm9JdT5uITtNWGc6WzldXmw5bXJDWGo0Zl1OPiYyblI6UFBvYCllJmYlcU9raGBoRis+ZWdlMCVBYEhgPzFTUlBMQUlPaFlURTUjQzQxbjFKciI1YHU3XGovT05SRilzZlw3LmxxTCcpK1tXRU5RaV9HNV07QSQ9Kk0iUzJbRF9UWFJfLzo/b10nZk07czFYSCJsKTQrWkVyJmtoWDR0QWVnYk9GIjA7OmY3SUJaRU4jNyFhZyR0N0tiJCpJSF88J3BcaD1vZithSkgvY1pKRlNebFdMN3RcL1VDSydMSUAhJ0w9LllXcSsoSiRqPCU5OzBwTX4+ZW5kc3RyZWFtCmVuZG9iagoyMyAwIG9iago8PAovRmlsdGVyIFsgL0FTQ0lJODVEZWNvZGUgL0ZsYXRlRGVjb2RlIF0gL0xlbmd0aCAxNzU5Cj4+CnN0cmVhbQpHYiE7ZGdNWiUwJjpNbCslL2VJc1wkN0tJVStRS0NpJDpxUUtlS0YtL1BzNTlNU189XUZCYCYrQ3NlPTQ6bSxbMCl0MHJhL3MrIyZBUCthR0VkNW4hOl10bjxPUW5vYCElcEFOPzUiRnFdRV1SNkFxMmZAZi9yZU02NWlMXEM4Tz89IWdbUDdgJWA7KV9vSjRrRmlPXUc6cjthbzdOJithIVNSO1A2XXRfLiF0NiNUKERNWy5GWzkiNElBWGhJNnRuJiojUio9OT1dQy1pYmV1VTRUIm9dVjdkcXBXPzVgdVspUS9uIzdhWC1QazE1JkQzcy1KIl9ecnFqQlQ/ZS9ccXUvJF9BR0c3IUs3VDctM09QSjQyWHEuYSU+NG1GZHMyVUQ0RC9OInNLO1NDUy5eaD1xYVFcRk5fKnJZJ01zY0hNVkJmY0AzMl1SOSEnVm9kR0YrOjEtTWkiXltBNyEuS09xaDMvKk9xOVZfN1kiTHE5UTktbjVgWjw2OlU8Rzg7ai11L2krInVFOGovNEFSMDtjZHM4TEhbMGM1WzB1P0NOMlgyWkRhPEQtWjwrMkk7aCUlVDJdPUZsK1kpWkIlPFtWKTtHIjBoaUNIVGY1dXBpO0VdVE0xRTZkJmQ+KSFOISNMRVRhJ3JWM1Y0cGteVXRAcmJbSF5RamVIMjxnajQrI0RiPmpeVyh0U1k8KjosR1pWRCYwXEBMR19cLjtvM1VwMENAViNdams0P0QnbiwpUDkrXS5lT2dKX209VlAvbzplL2klXEBLOy1Tb0pUaCNeIj5DbjVtRjpQJUsqUGJka0RnKE1gQU8uPmxsW0JEOjNIaUZSTGNjM1hEKFNuSy00RFI6MydJSm8sbDNeaWNOVz88QmAramlXRClmMWBzci5rZzhkL0JaMUIjQTZjKGEzWVBaNkwrbGNSNWAtKlJGVSJWcTEiPmhUSztKI2k1bG1BYTBQSnJHUSlkUkNCNj1UM15xSWZ0LEk7TTFNSGk0RVBJUV9kZ0dvTzJtY2BFZzdqSEdKNVsnTzg3algrRUIhaUU8cyRlOEwuV2pnbkgnJC1JZElgb0lBPUJKOjdNQjdpP0kjSXRkSGtWJUEsQUdURWVDZmFvKjRKOWQyNFNZXXJvXEo4Sm09TEA/XWFgLVxdWGZUUDE1NmlIMjltUSgxLTxfTDMnO1dlRS0iWi1tNV4yJHRXNEVYaC9yNl07akcjUUg1JSRPZzdaJjUhUFBtbiljL0dHODtFPSssWUhJazZJNjU5Q0EiVUlWPD5NO2JmOz5KNVsyLkdnMTFYQXBYSj45MjJTMm9ZUGouM10/PyY+JSUiYmA7bykkbTFmLGZqSmlDIlJcOSsyLDUuVzBeb0QpKTgnX0YpYEAzLEVBI2soImBDNnAyc1cvQE1majdQcjshSFJUJE0kOmpTTTJcUXByR1hEWktIMGRodCk5S3RRPCs2PUQ8TFVSM1dDImZBLipJbFIqSSs6RzQ/WEVxI2xMbm5GPyRgcD9DanUuWmo1dTNgNTtEbGQoJiRFaT9mKFlEbDhZbGQvMC1GSy86SlU0LmBIKk43QGVLLXBXI0ZJMkQlRzdvJjYnKk5salIyWDwtXHInYjlTXllFcmpsKnBTbzxuPExuOmdvKixtclA4alVjVEMnSipQXilBQz83PGRMcCZoSU0zZzFrXi5malVEI1JxLHBhV1FHZ19FV1pnL0VEQCE/QU5RKzYyViJSYXJFTipXYDs3ZDJlSz1jXzVpPFs9aTUrS2Q7cU4pcDg8Si1qNmVWSiQyNS9rLDFAQ2Q4VlpSLF9LMlhDYl8oQmcqWjQiMDFxbk4lM2wiMSgqK2gxNDh0JmQhMWVvNzFLLSJALWVQdTt1OWA7JlNFRE9dMypyX0gsWTAlSUtoMVA3aSgzO0ZPYmFuMl1HdUI/SkhkajFCJG0lanVfbF8jTl1vXTpRQnNaTDFXZks1Sm0iXVBELGNcNV8iKlpGO0dVT1oiLktbYHJgSkBrZCdqUT1kKGtQSDpiPCRUYV0jOkw8V0VzOzNBSzMpPVE4MkNlN1JYUEBOaTo1MyVqZF9XcV1LMUNfZmw8Z1JQJVc4UU8zKGwzUWQxRkFGWy5QbzcsPzxlP0QhdUdwPi9tXFMzbE81UUR0TyIsM1E5S1NRUURPKjksSEwxMW5WbThdJiUwRE4mRTw3S1JDZlh1WnUwSFQyWlhVdDN0VSdzR01CMCJKbylBX3E8Wj5QbXRBX051dEBEQXA7TWU+PUUwOzQnQUY+VFJfN1EycllCOmNgJlxMQEElbEJEKGAqaFxzISZ1aDtLJlI6dDVZKVBfbWJscComKXJiNV8ib34+ZW5kc3RyZWFtCmVuZG9iagoyNCAwIG9iago8PAovRmlsdGVyIFsgL0FTQ0lJODVEZWNvZGUgL0ZsYXRlRGVjb2RlIF0gL0xlbmd0aCA5MTYKPj4Kc3RyZWFtCkdhdTBCZDtHRi0nUmU7L2dwYStZbEljQipkJ3BDSVdfMDhBRmpaZk82R1pDTyFASEllVkxKS0grakpHa1coPiNFTTFDIzZjVDFhVENEXW5HWjAlSmohMS5kJW5zJzc5MFJqLT5PcT9iM1w9TzVeIjFGJkYzL00pYzFEaVZsX1Z1dWBGWjwqb1ReYC1qaiVTQUppSVRwLCNrYDRnWUBRQm5jTEhTbERTXmxtYm5mKVEwRlM5Qy8tPFhbSiNRdWdxNTokcy5hQCZtYmImPkNmampmO15GZ0tNK0csWSFPLyJjWihpS04tbik2WVVOQ1BhPjBpPSJyKztHX0chbGYlUzhSLVlqK0RcbzE8WG4jQyNHOTJoLlVBQTInamU4TCxvIycqPTJYRD4oO2gob1cpQTFpRTBWZSdQRGNhZ29OOEpRXjZkJzZKblNfRSIzM2VTbzFVKEBQOUVcaWopKFllViteTEZuJ2I5Ny9uSmA/RUUzbTQ8R05yaXMobDVLYjcwZVtWOj9bOSIjQ0Ftamhdbz83JEdfTmkpRC9hKkBaOHE3P29CNTBINCVTIXVuKytMI2E3OmwrMWhaVT9XZFBNcFVrayYwSTZuVzw7VUFfQS4iakYnWWJlIkYmUmdvLy0xVzEqYC9JRGpoYEc2cUBIPWErbz9ZLUpPJkwjcCIqbkk/Zi9zXVJpR01EXkwpcWRgaVFGRWM5MzcoaFFALTI/Yz1JZSE3NEA0cT0tLD51WzEscGRrVV40XzNJX1IwWF1QUUBbRyNebzppTTQoUXVcQF10ZEcqY21rajBSYTkyLl1ua1poQSJQXVhNY0NAIUleTCJoWFwiRilwdDRHRydMMjw/UXA0bSw9bm8kQVZNaUdrXW9TJDYpNURAOWIwUiNIODdoXTo3Oi5xbi5BM1xPcUJmPFpaX3JWNXRLYDpkPVtFZFZiPj5jXz1UUXIhR1NlJi1MTztUUE0zS1xbYm02cDVSViQ2S1RTNXIldFkmQEo1YiFOa1w6TFhnbVVQMG9FYCVKb3RYPnUlXmI4LF4hcnVjJCE2JFBEbSg3VWRiKCk8PGJfSzRQWCFVYy8ybG1YckB0WnUmdEJsbzdeO0ldakZXPFshPkNZQENQZ14rQ1ZzTUA5PjAtWkFqV2NtZlRSKF0kJFN1Pi8oOzkxWWAkQnVgMyskLDNnSWdRPlYxJFNyX2osazowaVk+QElQKEQrSEs3fj5lbmRzdHJlYW0KZW5kb2JqCjI1IDAgb2JqCjw8Ci9GaWx0ZXIgWyAvQVNDSUk4NURlY29kZSAvRmxhdGVEZWNvZGUgXSAvTGVuZ3RoIDEyMjcKPj4Kc3RyZWFtCkdiISRFOTY4ZlgmQkY2ZU1TO0FTQDY/P29raSZPKUdVWzpLPk5GbGwyX0t0KWopSVghYmAnMXBqTVJtIjEpTHRqYUhbYE1cMWpTQWsyM3EmJEsxW2xtPF90PHImb1tycEIkIyRmYks9MWBBIWR1cS8hOFFMY2BkSlo2WWRJSjJCaWNhSElWNF9vbXVoU25HaWwnRks+IjEvXWxnXyg+b2U4P2s2Zk4iPCNbI1JNXGhPLSJKITgyNktIcGVbP1guW0N1KjxeRj9fTEE+TSc/LjxaSmwyMiI3VitmIlJsZEclZSMlZmVKSFY8KSxpOU1oPy5VbCNJJDBjZmo1YDIqdURbMyopKidkIStGV19oND1LMk4nXzxjWGdUdTs5Q0xxLlQmRlJyJDAlMVJiPVJVRFptb0UwYl5xSCJLTENgM2IvImRlZ09NI1ljSF4rdSZhWzE/KUtmSkVmOCRBNHRPX0woXD4uSCFvQ3FkQW9vRHFwV19EXF5WSi5vVGQ/R0hgXF5nYl80QWQ4Nz5cYXBNLW8+TEMhXyM9UC49L3UuRzxQP2RKYCY+STZqUFk0OUUuUm80c2IjT2BKNWlmTyZPRidSZ2ZmIWBzPTlFLiNcWiszM0tqa2VUb1tjLWYxdT1TSC1eS3BKSDUnJCZsTS9FUix1Vj1eTG4pPiZDXSwkPiNCKkpkak87LzFrRUIkZi51SnFyPT5cb15XKVcmQ1dQbHElRUwiQUFFSSliPSpNdUZkZ3M3VEgkcFs9MUY0NyRuT3NwLTlpaGY5M2VraE1mY0dRWmwyOVExYV8uJ3BATEBaaFVTUlVbUyhYc0BdIzQ0OkwvYCg0LldlWTJDMihuSWxHXjlfJTFcZjVlU0NrRCIrJkksYUAjNnJyWVdmJWNaQCNIYks3YWR0VzlZVCMjYGsuKGQ8azJgPTI2OGxWbVpyZT49TEQ5JGw7WCklUjhuO2pWMTxrWUdvYGtkIVw8JlE9VDg4OCFSbm9YKSosJzEkNV9QZkpjcylbTiNHXz5dbjpHYzMyPEdlM0NyK1c5TlU3SkA/J1QrUmBtITQ7XVolZGNpJy9NUmwmJWFTNFteJ2dOZWkoUi46K0VKP1RZNldqNjdQRVdrPVZVVSdnclJ0RC9LTUVSbE8lalcwbEg8JTo9TyE4bm5TcjU+Wm5sc29lQCpval8pQiwvVCIlP0VQQHJpc1Y/aCQ0VkNzJi4kLSVaWy4sMCloNFBxJGhHJmtkRy8yVSYjVTAxPVlfT2ZMV0tYRVVCNT4vMXJEXS5HOl5Bb0JQOnBMWCYhUUo5VDFPLzllY1RZXkNNcGckcidjWWo9VlE4bkdHJj42RzJ0XVsycl5MbUpkLUMkLjtUWjRINSU+L3FTXGFIZm0xO2NfJyczN2liTGo4OGI/b0pma24lVj9JQTM9SGAoNlE9RCpSZCFELE5AX0JhITc3cyh1LjVZVUlqKC1ZaCNjIiJvIVlwQ1MuaTJVTHEmMylfP1JpODRWMTtHVU0vQVM8PWRqcjFVVVwyckpnMlYhbTkjWWpmLFEwdG4oYFpqOy1ucEEhZC0xKj4hV0JyXTJkJlRkKlpxJydOOSohaGJoMHFpYi9eUkwmMi9MKSY3Q05eaFE0Jj47IVkkVyF+PmVuZHN0cmVhbQplbmRvYmoKMjYgMCBvYmoKPDwKL0ZpbHRlciBbIC9BU0NJSTg1RGVjb2RlIC9GbGF0ZURlY29kZSBdIC9MZW5ndGggMTExNAo+PgpzdHJlYW0KR2F1STVnTVliKiY7S1pGJ1NHMS80XWs/TGU+WV48RSNRMlZpTUxMcGhZRG1WZGwoRWVPdCJpSGoqKW4zRFVSKmwoJ3REY0prVi5gaFtHOjFUKXVpZUc1JV40XEJOcChbaE5LVXEkSlBBKTw9X2BqQ2Q0J10hbVYjNUwraz42NHRZMGMvSy9IX3EuKS84PSJqJyF1Zy1jKywhTFExIW81QlM8PXIrTixaV0A+bSpGUWM6LVkyR2QuY1ghSDBtL0MxLXJjVDckR0MkXWk1YUI8VlluIj1CbmNCS1hHMDYyaFZpa0RuXj0/QFFJQjY5Ymc/ZkozP1xKNCdXcG08dT5xRl9HSTA4Ozc/RXBDOzJza0NZYkhVRzdBMC1cUE8nUSE/bF0qR1pJKHBTZytJZDBNPVguYD4hRFNySVJWRUdXbXNmJFxMXkc9JS5wSTBtSG1YbmM6PVpdVC01NUxEJzhmNFVsbi9bM00+W20rODlgR0tMSyI4PnJRSjtKWEZoVVY7MSdYLmlmXSZUViVkKnUpYDs9Xy4xKUtyTzkhXVxVQkJKZGllPDhIV2hJRiY8W0hYbSgrQVYjZTxqLDZCYjklaldST1g1YVQ5S3NbUiRJS11hbXI8UltZSTorQz0rUDovMG1kaUAxcj1gZS9gVmZkLFJCSTdBWG05OSIiWl4rT3RbN0RRVCZCYDMlNkomUmY2MDdqQTo/QlNiaTRvMDE5U0ZLdSFJOkMnQmtWWWlNaCc8J1xpNFYpOD1sci0mLWJQaGEqZGs8KnE1cyRwKTZBXyEkPkVfMWBRN24oXDYsdVNqaDJnJHRYTWFgKDNaMSohITZaT2p0XD1Xaik7NGwxaD90ZSRwKFosJlhLdGdYWElNZ29MWTJGcF81O2FQYjhsI3FRQ3EsbjpDZjtrVTBPXjFMLVJZRVVUbEYiOiRFXmdFJVVfdUlQO0NNTUFxT2ZmJDlWakAwbjp1KklNcmZBWnJTRTsqWGorI29iU2JwRSYzJ3VHamAjUjQub21oKzpPRkYhKUslUEZYMm4uaigwTyVDbFJURi8zNGs8OF5jJ2QvamAxPjxdMSQhWGcmJjxOJFxJOFxmTGpxZGQ2JjE7X0lySi4kbkJDQD9VQy9Na2QmRE09MW9ZTyJBTm4yViwiNCxvIUxENiVNJ19dKUZnYjRySWpTLjM9W0REZ0hDZEwzOyphbjQlQUw9OVw7Kiw6WDBaVGotbE1uKWtkMjdhaW1HNCZQQFZdR2Y0Xz06ZFY1ayRJOTxDMiV1L0YpYF5HXC0oVTJiM1ErTTluKic3SEAuYEQlLGBCI1BPWm5nPT1cQUk1WitTSWo8dDE/TTM9a21uLz4oRD1kRGZqQldmJ0BbPiNMZUIoYzdvZF5HXWcvJmVZKUEuS28/QyU/QWU6JzBybHE3Sm5pYDpGXkZBZUUlYScnRi43Vz5dOU9xTmoraUBWJVc4cGUxLFQicUc5MSFFRVMiZSx+PmVuZHN0cmVhbQplbmRvYmoKMjcgMCBvYmoKPDwKL0ZpbHRlciBbIC9BU0NJSTg1RGVjb2RlIC9GbGF0ZURlY29kZSBdIC9MZW5ndGggMTE2MAo+PgpzdHJlYW0KR2F0bTo/I1NJVSdSZTwyXEIlPTNidVJBLVBjVlUwcSxmRjRYLEQ1VEo5X1phNnAjMzI7J2RZTWJIS2cibSZKblwsNzVWIys5XnEkcFJLLUIwLyFLXChOJWQqIkYuRCtaUlpCSV8uIVIpJDZpVHJpLFdpMGpiVz1LQGkhITM5LjstKyckckkxbk4yKz0mNUxYWyJJKWNEY040bCZROj45NTgsLGEyQUpzTT05MiowUGBiYyhGJz4tbTxSKz5qZUVha15SWWY4Yi5xOEVXO0Y5UD1XJnNzVy9oJFs0UyRpWkQpW0J1ajlwXVFNSTROKjsqNFUlJSkhRz4hakA2UFxDZDRQRUVjajoiVyM1RiFFYUNDQUU1KzI+YUs2L3MmKmZYYCU+P0RhNSg9JScpVWsoa0xOQS11R3JPKG5rUUI/U0hJNUdMPHBfRjlVKWVtLlgoPGgmdF4sNUJtZzhucGdkPTolKyksR0VvcnFARTlBSWMrYyRvZm5daT46IyJYSEFHbUNMbmI9ajFoKjZWMC9ONnMyT09MYCFAQkJmUzlZZFlPKlBXLz5OUHFMIUohNV4vaU5NOmZYWVYuVzhpcGFBUSgsSCNXOiElMSE9UD45bHQsL21wKWNZZ3QiU2Q2Szw2JFwpaVJjXSw6cC8wND4sKzNzMVdpaUEqNlE7JU9KRERuZCNAQFlLZVtQJ29cLUdxInRVLS86YGFgUVdUZVRDSmoncmo3YExpX1tSXCM9W24mc2RIWCIyP1owSG1kMjhZaUZhR05xV2EwcFBZTm9vIUFYJzNaM25COV5XYk0nPHRgP2xzPjpyYTopLCdQZXI5YmY+JjVrM01ibE9dQm9tVDdjN0d1bF9OcCVRZ2ZPUzFjYWM7U3FeT2Q7IW5oQGg6Iy48XCY8SlUkYitnJmhtSD9hcSI9P3VEcl1OaW8+I1hncDJSYzxrXDlAXlhhX1Yvb0Q/ZD5tWlVsMSQlRXA4LDk5bm9SLWxIY0I6KFU2TmxPOlJuU2cwW2tNJVZGITteSUw3WE9CbDhAJjNlcEpfQTBJT2lvJlZaM04vZi5nWy5LXlU9M2RCJD8lLTglcHRhNEhUQWBrZCFORWJSKFwuWWZPVmQzPyNbRTBMa1tnaVk2bW0xSyh1NDFMYC5TN0JQMjVYTj48OmsjcElVNktnJTZQV1JSImErKXBeKWwpaTkjdUpcPSVUZU1RIzdjamBZV2k5RkJMWzVxMitbMFlXTDgtRClxYGUxOXE8azZIT28xJXQyI2ZgOUNaM0lzMjdTLCQpWEFiLUNdLjkpXlZ1TXM1JTleKVIwRiZAWUVpaUooXjxlWixtZ05jdThDcVpFYFE0Wz1kPTM3KWZBWW9Ycm40OVwsMGBJYWJIX19yYzMoR00nXzNTSkdUL1QvOFBSMWRjXm8vT1daXUZTTGsyZFY+N2hKKXE2IkZtLVYoTE5IRk5qOmJmXy4+JnAwblFzUS4wOmdfMGFOTVIxKVNNWEV1bnVLQmRRcFwnUTwwXm03KSQkS20qKm9uamFHUmtbLWddNTxdfj5lbmRzdHJlYW0KZW5kb2JqCjI4IDAgb2JqCjw8Ci9GaWx0ZXIgWyAvQVNDSUk4NURlY29kZSAvRmxhdGVEZWNvZGUgXSAvTGVuZ3RoIDE0OTEKPj4Kc3RyZWFtCkdiITxPPyNTSVUnU2MpSi8nX0ZhL2xrTThVbmUlL085USo+LC9OV3NfZXNrPjhANS1dP2RYWHVrMUIndWx0QkYnRFxbUkUobSY3bEx1Tl5RbjMpUWNgOjJhQTEhNT0vL2E7OGAnLFMjXCdERUstUThlSFZvJlQ9b21qIio6PCUoKC5eQEU5Y1dZInBgWkdScHEiKjFwMCcnQzduOGVIQUtELCljMW4iMkFRSi9LQ09Mb11xVV9FUW03RTlSLj01cT0rKz4tdC9FT3M3KUQ/Ki5BUisnWHBmVkVVZDpCM04kV1A/SGk4XWE3OV1yRkk/dShhLkAlSjVDWG9BZlNDck9IUSwxR3M1LjRgKzNyRStbIztzbUs8Ul1SR2dZSUJgN1hYRmVlP3BrcDBhPGNANnJKL3VcXl5HZWkqMk88XUpPVExuJnQpJEppMSwnbGZqTC0vYmdZSSY+PFlHblRzKmBIJEtHRFhFajJVbitxWFFmSXQnTnIoSFZHQ0hOXycmOkhac0owcVVgVVNSKzhlUCc1REZqRlY7RGZfXShBMzJJQCYxbVVZOCspKmgvVGo/LXVxXTZrNm9KJmJsOG9UIVhqMUc6K1kybSxCJGgoNikoZztzPDVwKVwwT29eOlYvTmxDZiU9OTYpTT9bXEVEUlkqcFYuTkUqXGQ6I2wvVGhFP11GakdtXWw0XERIY2czRiFsIkd1Xy5XRnFpc2BQJ1BVVlFwbko3PyQ/TSs7ISpPQXNWRWtnIi8kPzlLKnBzMGJIMkBDX01ULG1QVllWYkYodU8ySFsrWz09I2xWW1c2YFklI2ppMDcrQz8oTVQqXGBoLUdlWCVmT3AnMzdoIjRVTUN1amRGdURyXmI8IWhgZWhfTzVgWyk4J29xQEtKIi9iPm9EdC11RTcpQ04yUkNKZCdjZV5CNzhmPmBYLEZAMCs9IWI8QVhaUy5rYFojZExiS0c7UTo3MzBab1ZjR0ZgcE5oNzhxTyxlRkhNbFBKV3AoQ2A8SkhuNUhJNyo0aXU/ZTFLPVNXQGc2Nj90dStUajUiIi9MNlAsQFgpO2gnSDNAbS9HOSwiUHEsLEgsWk1UL0RFLTtWSz9JWldYXlcwJFArc0Mqb0VkXitZMCM3ZFw6QltncjliQlBAb1YiWFJkPW9FKkVrUDEqXGclUG9MVmdWYG1DajA6bCZEcyRJRichJi1Kb1NHcE5OZkdPJzE0aUlyNFNUOWsoLVZUaGk4VVJTZiQ7JXM6I11PIyNqT1g6TFskQG9sY1tRRG1QQixzLVYmTU9eajNbcSM0KDQ+azRWNVBhaltGOCgsMXBFL0VnTSFrQWEqPlUmIXFSJDErS0MqMTNmbF8vJy9TOFpLWj5zVmFBPiMqIik/ZVwuMFNWbVxsJituKzZgV1JOaHJmLWZcU2pNQm9RSUJNQ05QRGQ/O3RMbFBQYjQjQ3RrXCRhKFZSY1VQdTRYKmRTVkcraVtBM1xhMERGXzwiREtvPjotdVdKVj41RGQsKS9ZXzVYWlArRGZCYjRpUzdwL2lyKltRYG5mP2hKS2tqX0MiODYpTSVBVlM8RFkoZmtTWEYxXF9QTURgKCY4UlpmUWMjJE5gVkpVYFZFPTpARl1LQiwnV15cQF00aUEhLlFVdDhSOzQxWFBWVCwoQyNVIUY3M1NcaHQ7Jzk7Z0lEQCtZcipYPlJyRkEiUUEuOltgUVtuM0ZEYjY7aEQ2UW1sJUA8ISghIyk/UmZQWzNYZT1kVmRmSFdMOUwyTS8sJi9TXG8jN1kmZ2NFbD8qQiVXMFthZ011QzRlbT4oIVU4SzEoIWpfSVIpOC9FQmFuOGVqW2ZUZiYiIUpxXTc2YmlccixuYmVaR3NjR0JXRjQhWy9gQzYtXi0wQlBzQlNwQ3QzZExUW01kbmNwdC9HJEJMZ2gyV1VObStTZCRVJVVaLFchOychMjhdKCk8IzhEX2RBZGQ8JCNgVFBTYnJTTEJ1TTR+PmVuZHN0cmVhbQplbmRvYmoKMjkgMCBvYmoKPDwKL0ZpbHRlciBbIC9BU0NJSTg1RGVjb2RlIC9GbGF0ZURlY29kZSBdIC9MZW5ndGggODgwCj4+CnN0cmVhbQpHYXVhPj8jUTJkJ1NjKUovJ2N1N2VrZzEhJnBCVj1sLXEvIVpQQD5HYCFsbC9FRyVzW0s9KFVTKkQiWDI/KWtJcDZuIWZiby9YazNJVmYsZTUsOmpDJyZZVHRQQi1lWTY/MzxhcSRgRUhiYF1mW0ozO0RBVyNydTgtODo8SDUpSCRPZ0w3Py9uL3JkKTpGUDFoa0w1T0FSIjhCTVlZNE9EYXEtV2NFPGxtc2xAdHUhISssJDBmLzJSLDJKKWFlUEhBQz4rSmovX2UhOCIoLlZcMm44RkBYSGhyOSUiQi0uYHNcdXVsYEl0YHRLPEgpS0chVXBPU1xnP1ItSC06U1UqcSZ0I0ZOPS1nUktxOzZob1RHPktSbUJOZWtIbnJuNEFqQjk7aWJyV2lSWSZLNWkxJVNjJ24hPFo0Ti9bRUtmZUNpXzdFPTwiNVxcXiIwI29LJSsvTnQrVSw9ay5dKkVPZ2RtZnNMcUtCUkQ1XDhRMVBlVFQ5bmQia0haWz0mbk1HQDM1LlFJRClkcFY2cy5oJkpDOkFSaUMkbF8kPGU3Ql9ZRl44VFgyL2VJYDAhOHEzUDo+Y3FoImk0KVUhblotaGFWVz1Ec0YqK1lqTTc/Il8kWWRaYC1vN2klW1dKMlJCYENyZCMuNSo+YFdjTlZlVjNuPiI9KnBBPHAxMWdIbFZqcE9YcDdTK1QjWlJBI2ptUEYoJCU+TUhLPF9JSG44MDJKTF8rPClrc1BSWC8rQiRYRlNNTi5Wa1Vkc1NEIUtsbW5oNGJpR0NmSjMpOWdCKmx1PnRebFUuLlAzayUsL0o5Oi9QOFkrMmJrXSguayJWWDM8K0w7bl5ASi9UWlY5K2pWZUxWalJoZShZaV9ZKl0/aWYmQVwlXydGUS5lSTMiVDRzLTs+JTVbMDM3R1Y8N2xBb0UxNVxcOSEtY2FJVldtRkZsWU8nWk4iKEEiOiJLbUBsOmE6XFhXb3RlOClgSTY6MD1TdD9DUyc6JzVSN2VlW2hTMW0jUlRobT0zLEZxPzEtWm4vb1xyYD8mYyxKY0AxWmk1Q2syS0peSW5tZiwqMmIxOEkxNiUxKEliRTo1VVlKPjNmaSknM2RDVTNqbGNcX0dtIWRiLGVpQGdiMT1lSG1RMU5EYSpvSlhVVzIoWHJeO2hfJnFuZidnO34+ZW5kc3RyZWFtCmVuZG9iagp4cmVmCjAgMzAKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDYxIDAwMDAwIG4gCjAwMDAwMDAxMzMgMDAwMDAgbiAKMDAwMDAwMDI0MCAwMDAwMCBuIAowMDAwMDAwMzUyIDAwMDAwIG4gCjAwMDAwMDA0MzUgMDAwMDAgbiAKMDAwMDAwMDY0MCAwMDAwMCBuIAowMDAwMDAwODQ1IDAwMDAwIG4gCjAwMDAwMDEwNTAgMDAwMDAgbiAKMDAwMDAwMTI1NSAwMDAwMCBuIAowMDAwMDAxMzMyIDAwMDAwIG4gCjAwMDAwMDE1MzggMDAwMDAgbiAKMDAwMDAwMTY0NCAwMDAwMCBuIAowMDAwMDAxODUwIDAwMDAwIG4gCjAwMDAwMDIwNTYgMDAwMDAgbiAKMDAwMDAwMjI2MiAwMDAwMCBuIAowMDAwMDAyNDY4IDAwMDAwIG4gCjAwMDAwMDI2NzQgMDAwMDAgbiAKMDAwMDAwMjc0NCAwMDAwMCBuIAowMDAwMDAzMDI1IDAwMDAwIG4gCjAwMDAwMDMxNDYgMDAwMDAgbiAKMDAwMDAwNDEyNyAwMDAwMCBuIAowMDAwMDA1MDgwIDAwMDAwIG4gCjAwMDAwMDY0MzcgMDAwMDAgbiAKMDAwMDAwODI4OCAwMDAwMCBuIAowMDAwMDA5Mjk1IDAwMDAwIG4gCjAwMDAwMTA2MTQgMDAwMDAgbiAKMDAwMDAxMTgyMCAwMDAwMCBuIAowMDAwMDEzMDcyIDAwMDAwIG4gCjAwMDAwMTQ2NTUgMDAwMDAgbiAKdHJhaWxlcgo8PAovSUQgCls8YjA3YTg4ZDQxNmNjZTk0OWI5Y2IxZjVjMGQ0OTYzMzM+PGIwN2E4OGQ0MTZjY2U5NDliOWNiMWY1YzBkNDk2MzMzPl0KJSBSZXBvcnRMYWIgZ2VuZXJhdGVkIFBERiBkb2N1bWVudCAtLSBkaWdlc3QgKG9wZW5zb3VyY2UpCgovSW5mbyAxOCAwIFIKL1Jvb3QgMTcgMCBSCi9TaXplIDMwCj4+CnN0YXJ0eHJlZgoxNTYyNgolJUVPRgo=";
+  var bin=atob(b64);
+  var arr=new Uint8Array(bin.length);
+  for(var i=0;i<bin.length;i++) arr[i]=bin.charCodeAt(i);
+  var blob=new Blob([arr],{type:"application/pdf"});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement("a");
+  a.href=url;
+  a.download="Empire_Machine_V5_Guide.pdf";
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); },100);
+}
+
+// ═══════════════════════════════════════════════════════
+// MODAL / RESET
+// ═══════════════════════════════════════════════════════
+function showModal(msg,fn){ document.getElementById('modal-msg').textContent=msg; document.getElementById('modal-ok').onclick=function(){ fn(); closeModal(); }; document.getElementById('modal').style.display='flex'; }
+function closeModal(){ document.getElementById('modal').style.display='none'; }
+function resetMachine(){
+  var last=localStorage.getItem('eva_last_session_time'); var diff=last?Math.floor((Date.now()-last)/60000):20;
+  var msg=(blocks.length>0&&diff<15)?'STOP — Article de '+diff+' min. As-tu bien tout copié ? Un backup sera conservé.':'NOUVEAU SUJET ? Tout sera effacé. Un backup sera conservé.';
+  showModal(msg,function(){
+    localStorage.setItem('eva_backup', JSON.stringify(blocks));
+    ['eva_blocks','eva_inputs','eva_last_session_time'].forEach(function(k){ localStorage.removeItem(k); });
+    blocks=[]; inputs={topic:'',seo:'',transcript:'',insight:'',context:'',author:'',links:''};
+    ['inp-topic','inp-seo','inp-transcript','inp-insight','inp-context','inp-author','inp-links'].forEach(function(id){ document.getElementById(id).value=''; });
+    goInputs(); document.getElementById('blocs').innerHTML='';
+    updProgress(); updGenBtn(); updFooter();
+    window._chap3_hasVideo=false;
+  });
+}
+</script>
+</body>
+</html>
