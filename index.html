@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Astuces des Pro">
+<meta name="copyright" content="© 2026 Astuces des Pro — Tous droits réservés">
+<meta name="robots" content="noindex, nofollow">
 <title>Empire Machine V.5.0 | Astuces des Pro</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -181,6 +184,7 @@ main{max-width:920px;margin:0 auto;padding:28px 16px 100px}
       <span id="hdr-provider-dot" class="provider-dot gemini"></span>
       <span id="hdr-model">Gemini 2.0 Flash</span>
       <span id="hdr-key-status" class="key-indicator missing">⚠ Clé manquante</span>
+      <span style="color:var(--b400);font-weight:700;font-size:9px;letter-spacing:.5px">© Astuces des Pro</span>
     </div>
   </div>
 </div>
@@ -306,7 +310,10 @@ main{max-width:920px;margin:0 auto;padding:28px 16px 100px}
 </main>
 
 <footer>
-  <span style="font-size:9px;font-weight:700;color:var(--ts)">© 2026 EMPIRE MACHINE V.5.0 — ASTUCES DES PRO</span>
+  <div style="display:flex;flex-direction:column;gap:2px">
+    <span style="font-size:10px;font-weight:800;color:var(--b700);letter-spacing:.3px">© 2026 <span style="color:var(--b500)">ASTUCES DES PRO</span> — Empire Machine V.5.0</span>
+    <span style="font-size:8px;font-weight:500;color:var(--ts)">Tous droits réservés · Reproduction interdite sans autorisation écrite</span>
+  </div>
   <div style="display:flex;gap:16px;align-items:center">
     <span style="font-size:9px;font-weight:700" id="ftr-provider">gemini</span>
     <span style="font-size:9px;font-weight:700;color:var(--b500)" id="ftr-model">gemini-2.0-flash</span>
@@ -763,20 +770,22 @@ function buildPrompt(n){
   return {
     title:'BLOC 5 — PACK SEO & DISTRIBUTION V.5.0',
     prompt:iso+
-      "Genere le Pack Final SEO & Distribution V5.0 pour : \""+inputs.topic+"\".\n"+
+      "Genere UNIQUEMENT le Pack Final SEO & Distribution V5.0 pour : \""+inputs.topic+"\".\n"+
       "MOT-CLE : "+(inputs.seo||inputs.topic)+".\n"+
       "AUTEUR : "+authorStr+".\n\n"+
-      "REGLE ABSOLUE : sections dans l ordre exact, marqueurs sur leur propre ligne, zero commentaire.\n\n"+
+      "REGLE ABSOLUE N°1 : NE JAMAIS reproduire le contenu des blocs 1-4. NE PAS inclure de table des matieres, chapitres, ou contenu d article.\n"+
+      "REGLE ABSOLUE N°2 : Chaque section doit commencer EXACTEMENT par son marqueur ===CLE=== sur sa propre ligne, suivi directement du contenu demande.\n"+
+      "REGLE ABSOLUE N°3 : Sections dans l ordre exact ci-dessous. Zero commentaire. Zero texte entre les sections.\n\n"+
       "===INTRODUCTION===\n[120-150 mots. Accroche forte. Probleme central. Valeur apportee. Lexique Platinium. E-E-A-T.]\n\n"+
       "===IMAGE_COUVERTURE===\n[Prompt EN ANGLAIS. Commencer par : \"Aspect ratio 16:9, 1920x1080px — \" puis : photorealistic premium, ambiance, couleurs, sujet, composition, eclairage. 100 mots max.]\n\n"+
       "===IMAGE_INTERIEUR_1===\n[Prompt EN ANGLAIS. Commencer par : \"Aspect ratio 16:9, 1920x1080px — \" puis : illustratif ou conceptuel, aspect technique ou processus cle. 80 mots max.]\n\n"+
       "===IMAGE_INTERIEUR_2===\n[Prompt EN ANGLAIS. Commencer par : \"Aspect ratio 16:9, 1920x1080px — \" puis : data-driven ou infographique, resultats, comparaison avant/apres. 80 mots max.]\n\n"+
-      "===TITRE_SEO===\n[UN SEUL TITRE. 55-65 caracteres. Intention B2B/tech/finance. Mot-cle inclus. Sans CPC.]\n\n"+
-      "===META_DESCRIPTION===\n[150-155 caracteres exactement. Mot-cle. CTA fort.]\n\n"+
-      "===15_TAGS===\n[15 tags virgule. Longue-traine + generiques.]\n\n"+
-      "===SLUG_URL===\n[1 slug. Minuscules, tirets, sans accents, max 6 mots.]\n\n"+
+      "===TITRE_SEO===\n[UN SEUL TITRE sur UNE SEULE LIGNE. 55-65 caracteres. Intention B2B/tech/finance. Mot-cle inclus. Sans CPC.]\n\n"+
+      "===META_DESCRIPTION===\n[UNE SEULE LIGNE. 150-155 caracteres exactement. Mot-cle. CTA fort.]\n\n"+
+      "===15_TAGS===\n[UNE SEULE LIGNE. 15 tags separes par virgule. Longue-traine + generiques.]\n\n"+
+      "===SLUG_URL===\n[UN SEUL SLUG sur UNE SEULE LIGNE. Minuscules, tirets, sans accents, max 6 mots. Exemple: produits-digitaux-afrique-2026]\n\n"+
       "===CONCLUSION===\n[150-200 mots. Points cles. Mot-cle. CTA primaire + CTA secondaire article connexe.]\n\n"+
-      "===10_FAQ===\n[10 Q&R. Format :\nQ: [question]\nR: [reponse 3-4 phrases]\n\nRepeter 10 fois. Couvrir : definition, comparaison, cout, mise en oeuvre, benefices, erreurs, tendances, ROI.]\n\n"+
+      "===10_FAQ===\n[10 questions-reponses. Format STRICT pour chaque FAQ :\nQ: [question complete ?]\nR: [reponse 3-4 phrases completes]\n\nRepeter ce format 10 fois. Couvrir : definition, comparaison, cout, mise en oeuvre, benefices, erreurs, tendances, ROI, cas pratique, avenir.]\n\n"+
       "===FAQ_JSON===\n[JSON-LD FAQPage VALIDE. 5 meilleures questions. Suivre EXACTEMENT ce format :\n"+faqJsonEx+"\nJSON valide pret pour head WordPress.]\n\n"+
       "===SCHEMA_ARTICLE===\n[JSON-LD Article VALIDE. Remplacer TITRE, META DESCRIPTION, SLUG-URL par les valeurs generees ci-dessus. Suivre EXACTEMENT ce format :\n"+articleSchemaEx+"\nPret pour head WordPress.]\n\n"+
       "===POST_FACEBOOK===\n[80 mots EXACTEMENT. Accroche. 2-3 emojis. Question finale. 3 hashtags.]\n\n"+
@@ -900,16 +909,67 @@ function parsePack(raw){
     var st=raw.indexOf(mk); if(st===-1) continue;
     var en=raw.indexOf(nmk,st);
     var cont=en!==-1?raw.slice(st+mk.length,en).trim():raw.slice(st+mk.length).replace('===FIN_PACK===','').trim();
+
+    // Pour SLUG_URL : prendre uniquement la 1ère ligne non-vide (jamais de contenu parasite)
+    if(s.key==='SLUG_URL'){
+      var slugLines=cont.split('\n');
+      for(var sl=0;sl<slugLines.length;sl++){
+        var sln=slugLines[sl].trim();
+        // Ignorer lignes vides et marqueurs parasites
+        if(sln && !sln.startsWith('===') && !sln.startsWith('#') && !sln.startsWith('---')){
+          cont=sln; break;
+        }
+      }
+    }
+
+    // Pour TITRE_SEO, META_DESCRIPTION : première ligne non-vide
+    if(s.key==='TITRE_SEO'||s.key==='META_DESCRIPTION'){
+      var tLines=cont.split('\n');
+      for(var tl=0;tl<tLines.length;tl++){
+        var tln=tLines[tl].trim();
+        if(tln && !tln.startsWith('===') && !tln.startsWith('#') && !tln.startsWith('---')){
+          cont=tln; break;
+        }
+      }
+    }
+
+    // Pour 15_TAGS : première ligne non-vide
+    if(s.key==='15_TAGS'){
+      var tagLines=cont.split('\n');
+      for(var gl=0;gl<tagLines.length;gl++){
+        var gln=tagLines[gl].trim();
+        if(gln && !gln.startsWith('===') && !gln.startsWith('#') && !gln.startsWith('---')){
+          cont=gln; break;
+        }
+      }
+    }
+
+    // Pour 10_FAQ : formater Q/R proprement
     if(s.key==='10_FAQ'){
-      var lines=cont.split('\n'); var fmted=[];
+      // D'abord, nettoyer le contenu parasite (tout ce qui n'est pas Q: ou R: ou contenu de réponse)
+      var lines=cont.split('\n'); var fmted=[]; var inFaq=false;
       for(var li=0;li<lines.length;li++){
         var ln=lines[li].trim(); if(!ln) continue;
-        if(ln.match(/^Q\s*:/i)){ fmted.push(''); fmted.push(ln); }
+        // Ignorer les marqueurs parasites ===...===
+        if(ln.startsWith('===')) break; // stopper si on tombe sur un nouveau marqueur
+        if(ln.match(/^Q\s*:/i)){ inFaq=true; fmted.push(''); fmted.push(ln); }
         else if(ln.match(/^R\s*:/i)){ fmted.push(ln); fmted.push(''); }
-        else fmted.push(ln);
+        else if(inFaq){ fmted.push(ln); }
+        // Si on n'est pas encore en FAQ et qu'on trouve du contenu non-FAQ, on ignore
       }
       cont=fmted.join('\n').trim();
     }
+
+    // Pour toutes les sections : arrêter si on rencontre un marqueur ===...===
+    if(s.key!=='10_FAQ' && s.key!=='FAQ_JSON' && s.key!=='SCHEMA_ARTICLE'){
+      var cleanLines=cont.split('\n'); var cleaned=[];
+      for(var cl=0;cl<cleanLines.length;cl++){
+        if(cleanLines[cl].trim().startsWith('===')) break;
+        cleaned.push(cleanLines[cl]);
+      }
+      cont=cleaned.join('\n').trim();
+    }
+
     res.push({key:s.key, label:s.label, icon:s.icon, type:s.type, gold:s.gold||false, cont:cont});
   }
   return res.length>=3?res:null;
